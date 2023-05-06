@@ -29,5 +29,8 @@ namespace assignment1
 	private:
 		char* mStr;
 		size_t mLength;
+
+		size_t strlen(const char* str);
+		void memcpy(char* dest, const char* origin, size_t length);
 	};
 }

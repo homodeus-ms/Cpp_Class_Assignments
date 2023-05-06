@@ -1,5 +1,4 @@
 #include "MyString.h"
-#include <iostream>
 
 using namespace std;
 
@@ -102,7 +101,7 @@ namespace assignment1
             }
             else if (*q == '\0')
             {
-                q == s;
+                q = s;
                 p++;
             }
         }
@@ -152,7 +151,7 @@ namespace assignment1
             }
             else if (q < s)
             {
-                q == s + sLength - 1;
+                q = s + sLength - 1;
                 p--;
             }
         }
@@ -405,6 +404,25 @@ namespace assignment1
                 *p = c ^ 0b100000;
             }
             p++;
+        }
+    }
+
+    size_t MyString::strlen(const char* str)
+    {
+        const char* p = str;
+        while (*p++ != '\0')
+        {
+        }
+        return p - str - 1;
+    }
+    void MyString::memcpy(char* dest, const char* origin, size_t length)
+    {
+        char* p = dest;
+        const char* q = origin;
+
+        for (size_t i = 0; i < length; ++i)
+        {
+            *p++ = *q++;
         }
     }
 }
