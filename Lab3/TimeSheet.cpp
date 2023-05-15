@@ -9,7 +9,7 @@ namespace lab3
 		, mIndex(0)
 		, mName(name)
 	{
-		mWorkTime = reinterpret_cast<int*>(new int[mMaxEntries * sizeof(int)]);
+		mWorkTime = new int[mMaxEntries];
 		memset(mWorkTime, 0, mMaxEntries * sizeof(int));
 	}
 
