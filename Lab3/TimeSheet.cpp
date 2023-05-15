@@ -9,7 +9,7 @@ namespace lab3
 		, mIndex(0)
 		, mName(name)
 	{
-		mWorkTime = new int[mMaxEntries * sizeof(int)];
+		mWorkTime = reinterpret_cast<int*>(new int[mMaxEntries * sizeof(int)]);
 		memset(mWorkTime, 0, mMaxEntries * sizeof(int));
 	}
 
@@ -58,7 +58,7 @@ namespace lab3
 	int TimeSheet::GetTotalTime() const
 	{
 		unsigned int result = 0;
-		for (int i = 0; i < (int)mIndex; ++i)
+		for (int i = 0; i < static_cast<int>(mIndex); ++i)
 		{
 			result += mWorkTime[i];
 		}
@@ -73,7 +73,7 @@ namespace lab3
 			return 0.0f;
 		}
 		int sum = GetTotalTime();
-		float average = sum / (float)mIndex;
+		float average = sum / static_cast<float>(mIndex);
 		return average;
 	}
 
@@ -89,15 +89,15 @@ namespace lab3
 		float average;
 		float sDeviation;
 
-		for (int i = 0; i < (int)mIndex; ++i)
+		for (int i = 0; i < static_cast<int>(mIndex); ++i)
 		{
 			int value = mWorkTime[i];
 			sum += value;
 			sumSquareX += value * value;
 		}
 
-		average = sum / (float)mIndex;
-		averageSquareX = sumSquareX / (float)mIndex;
+		average = sum / static_cast<float>(mIndex);
+		averageSquareX = sumSquareX / static_cast<float>(mIndex);
 
 		sDeviation = averageSquareX - average * average;
 
