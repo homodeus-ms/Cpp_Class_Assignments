@@ -7,13 +7,32 @@ namespace lab4
 	PolyLine::PolyLine()
 		: mPointCount(0)
 	{
-		mPoints = new const Point * [10];
 		memset(mPoints, 0, sizeof(mPoints));
 	}
 
 	PolyLine::~PolyLine()
 	{
-		delete[] mPoints;
+		for (unsigned int i = 0; i < mPointCount; ++i)
+		{
+			delete mPoints[i];
+			mPoints[i] = nullptr;
+		}
+	}
+	PolyLine::PolyLine(const PolyLine& other)
+		: mPointCount(other.mPointCount)
+	{
+		for (unsigned int i = 0; i < mPointCount; ++i)
+		{
+			Point temp(*(other.mPoints[i]));
+			mPoints[i] = &temp;
+		}
+	}
+	PolyLine PolyLine::operator=(const PolyLine& other)
+	{
+		mPointCount = other.mPointCount;
+		memcpy(mPoints, other.mPoints, sizeof(mPoints));
+
+		return *this;
 	}
 
 	bool PolyLine::AddPoint(float x, float y)
