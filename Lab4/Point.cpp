@@ -2,22 +2,16 @@
 
 namespace lab4
 {
-	Point::Point()
-		: mX(0)
-		, mY(0)
-	{
-
-	}
 	Point::Point(float x, float y)
 		: mX(x)
 		, mY(y)
 	{
 	}
-	
+
 	Point::~Point()
 	{
 	}
-	
+
 	Point Point::operator+(const Point& other) const
 	{
 		return Point(mX + other.GetX(), mY + other.GetY());

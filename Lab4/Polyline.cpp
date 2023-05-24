@@ -6,19 +6,16 @@ namespace lab4
 {
 	PolyLine::PolyLine()
 		: mPointCount(0)
-		, mPointerCount(0)
-		, mPointers(0)
 	{
 		memset(mPoints, 0, sizeof(mPoints));
 	}
-	
-	
+
 	PolyLine::~PolyLine()
 	{
-		for (unsigned int i = 0; i < mPointerCount; ++i)
+		for (unsigned int i = 0; i < mPointCount; ++i)
 		{
-			delete mPointers[i];
-			mPointers[i] = nullptr;
+			delete mPoints[i];
+			mPoints[i] = nullptr;
 		}
 	}
 
@@ -29,7 +26,7 @@ namespace lab4
 			return false;
 		}
 
-		Point p(x, y);
+		const Point* p = new const Point(x, y);
 
 		mPoints[mPointCount++] = p;
 
@@ -43,11 +40,7 @@ namespace lab4
 			return false;
 		}
 		
-		mPoints[mPointCount++] = *point;
-
-		mPointers = new const Point*;
-
-		mPointers[mPointerCount++] = point;
+		mPoints[mPointCount++] = point;
 
 		return true;
 	}
@@ -59,10 +52,15 @@ namespace lab4
 			return false;
 		}
 		
+		delete mPoints[i];
+		mPoints[i] = nullptr;
+
 		for (unsigned int idx = i; idx < mPointCount - 1; ++idx)
 		{
 			mPoints[idx] = mPoints[idx + 1];
 		}
+
+		mPoints[--mPointCount] = nullptr;
 
 		return true;
 	}
@@ -74,15 +72,15 @@ namespace lab4
 			return false;
 		}
 
-		float minX = mPoints[0].GetX();
-		float minY = mPoints[0].GetY();
+		float minX = mPoints[0]->GetX();
+		float minY = mPoints[0]->GetY();
 		float maxX = minX;
 		float maxY = minY;
 
 		for (unsigned int i = 1; i < mPointCount; ++i)
 		{
-			float tempX = mPoints[i].GetX();
-			float tempY = mPoints[i].GetY();
+			float tempX = mPoints[i]->GetX();
+			float tempY = mPoints[i]->GetY();
 
 			if (tempX < minX)
 			{
@@ -113,6 +111,6 @@ namespace lab4
 
 	const Point* PolyLine::operator[](unsigned int i) const
 	{
-		return &mPoints[i];
+		return mPoints[i];
 	}
 }
