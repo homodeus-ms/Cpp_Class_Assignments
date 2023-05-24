@@ -21,10 +21,10 @@ namespace lab4
 	PolyLine::PolyLine(const PolyLine& other)
 		: mPointCount(other.mPointCount)
 	{
-		for (unsigned int i = 0; i < mPointCount; ++i)
+		for (int i = 0; i < mPointCount; ++i)
 		{
-			Point temp(*(other.mPoints[i]));
-			mPoints[i] = &temp;
+			const Point* p = new const Point(*(other.mPoints[i]));
+			mPoints[i] = p;
 		}
 	}
 	PolyLine PolyLine::operator=(const PolyLine& other)
