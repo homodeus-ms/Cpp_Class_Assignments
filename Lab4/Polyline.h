@@ -4,14 +4,12 @@
 
 namespace lab4
 {
-	class PolyLine
+	class PolyLine : public Point
 	{
 	public:
 		PolyLine();
-		PolyLine(const PolyLine& other);
+		//PolyLine(const PolyLine& other);
 		~PolyLine();
-
-		PolyLine operator=(const PolyLine& other);
 
 		bool AddPoint(float x, float y);
 		bool AddPoint(const Point* point);
@@ -21,8 +19,10 @@ namespace lab4
 		const Point* operator[](unsigned int i) const;
 
 	private:
-		const Point* mPoints[10];
+		Point mPoints[10];
+		const Point** mPointers;
 		unsigned int mPointCount;
+		unsigned int mPointerCount;
 	};
 }
 
