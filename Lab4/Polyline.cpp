@@ -13,13 +13,7 @@ namespace lab4
 
 	PolyLine::~PolyLine()
 	{
-		for (unsigned int i = 0; i < mPointCount; ++i)
-		{
-			delete mPoints[i];
-			mPoints[i] = nullptr;
-		}
-		delete mPoints;
-		mPoints = nullptr;
+		delete[] mPoints;
 	}
 
 	bool PolyLine::AddPoint(float x, float y)
