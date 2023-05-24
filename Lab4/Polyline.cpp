@@ -7,7 +7,7 @@ namespace lab4
 	PolyLine::PolyLine()
 		: mPointCount(0)
 	{
-		memset(mPoints, 0, sizeof(mPoints));
+		//memset(mPoints, 0, sizeof(mPoints));
 	}
 
 	PolyLine::~PolyLine()
@@ -111,6 +111,11 @@ namespace lab4
 
 	const Point* PolyLine::operator[](unsigned int i) const
 	{
+		if (i >= mPointCount)
+		{
+			return nullptr;
+		}
+
 		return mPoints[i];
 	}
 }
