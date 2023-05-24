@@ -74,7 +74,6 @@ namespace lab4
 		}
 		
 		delete mPoints[i];
-		mPoints[i] = nullptr;
 
 		for (unsigned int idx = i; idx < mPointCount - 1; ++idx)
 		{
