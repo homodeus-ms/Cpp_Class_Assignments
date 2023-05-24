@@ -21,7 +21,7 @@ namespace lab4
 	PolyLine::PolyLine(const PolyLine& other)
 		: mPointCount(other.mPointCount)
 	{
-		for (int i = 0; i < mPointCount; ++i)
+		for (unsigned int i = 0; i < mPointCount; ++i)
 		{
 			const Point* p = new const Point(*(other.mPoints[i]));
 			mPoints[i] = p;
@@ -30,7 +30,12 @@ namespace lab4
 	PolyLine PolyLine::operator=(const PolyLine& other)
 	{
 		mPointCount = other.mPointCount;
-		memcpy(mPoints, other.mPoints, sizeof(mPoints));
+		
+		for (unsigned int i = 0; i < mPointCount; ++i)
+		{
+			const Point* p = new const Point(*(other.mPoints[i]));
+			mPoints[i] = p;
+		}
 
 		return *this;
 	}
