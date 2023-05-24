@@ -7,7 +7,8 @@ namespace lab4
 	PolyLine::PolyLine()
 		: mPointCount(0)
 	{
-		//memset(mPoints, 0, sizeof(mPoints));
+		mPoints = new const Point * [10];
+		memset(mPoints, 0, sizeof(mPoints));
 	}
 
 	PolyLine::~PolyLine()
@@ -17,6 +18,8 @@ namespace lab4
 			delete mPoints[i];
 			mPoints[i] = nullptr;
 		}
+		delete mPoints;
+		mPoints = nullptr;
 	}
 
 	bool PolyLine::AddPoint(float x, float y)
