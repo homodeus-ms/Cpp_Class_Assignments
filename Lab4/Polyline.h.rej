@@ -1,0 +1,19 @@
+diff a/Lab4/Polyline.h b/Lab4/Polyline.h	(rejected hunks)
+@@ -4,15 +4,13 @@
+ 
+ namespace lab4
+ {
+-	class PolyLine
++	class PolyLine : public Point
+ 	{
+ 	public:
+ 		PolyLine();
+-		PolyLine(const PolyLine& other);
++		//PolyLine(const PolyLine& other);
+ 		~PolyLine();
+ 
+-		PolyLine operator=(const PolyLine& other);
+-
+ 		bool AddPoint(float x, float y);
+ 		bool AddPoint(const Point* point);
+ 		bool RemovePoint(unsigned int i);

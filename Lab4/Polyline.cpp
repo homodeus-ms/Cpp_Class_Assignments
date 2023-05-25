@@ -73,12 +73,14 @@ namespace lab4
 			return false;
 		}
 		
-		delete mPoints[i];
+		const Point* p = mPoints[i];
 
 		for (unsigned int idx = i; idx < mPointCount - 1; ++idx)
 		{
 			mPoints[idx] = mPoints[idx + 1];
 		}
+
+		delete p;
 
 		mPoints[--mPointCount] = nullptr;
 

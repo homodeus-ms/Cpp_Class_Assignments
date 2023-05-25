@@ -98,7 +98,7 @@ void PolyLineAddPointTest()
 	delete p1;
 	delete p2;
 
-#if 0
+#if 1
 	PolyLine* pl4 = new PolyLine(pl3);
 	Point* p3 = new Point(222.22f, 333.33f);
 	assert(pl4->AddPoint(11.11f, 22.22f) == true);
@@ -231,14 +231,19 @@ int main()
 {
 	const double EPSILON = 0.0009765625;
 
-	PolyLine pl;
-	pl.AddPoint(1, 2);
-	PolyLine pl2(pl);
+	PointOperatePlusTest();
+	PointOperateMinusTest();
+	PointOperateMultiplyTest();
+	PointDotProductTest();
 
-	std::cout << pl2[0]->GetX() << endl;
+	PolyLineAddPointTest();
 
-	std::cout << "NO ASSERT!" << std::endl;
-
+#if 0
+	PolyLineRemovePointTest();
+	PolyLineTryGetMinBoundingRectangleTest();
+	PolyLineOperateIndexTest();
+#endif
+	cout << "No Assert" << endl;
 
 	return 0;
 }
