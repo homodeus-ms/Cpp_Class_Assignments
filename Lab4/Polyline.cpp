@@ -61,10 +61,8 @@ namespace lab4
 		{
 			return false;
 		}
-
-		Point* p = new Point((*point).GetX(), (*point).GetY());
 		
-		mPoints[mPointCount++] = p;
+		mPoints[mPointCount++] = point;
 
 		return true;
 	}
