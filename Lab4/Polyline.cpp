@@ -12,10 +12,10 @@ namespace lab4
 
 	PolyLine::~PolyLine()
 	{
-		for (int i = 0; i < 10; ++i)
+		for (int i = 0; i < mPointCount; ++i)
 		{
 			delete mPoints[i];
-			mPoints[i] = nullptr;
+			mPoints[i] = NULL;
 		}
 	}
 	PolyLine::PolyLine(const PolyLine& other)
@@ -80,9 +80,9 @@ namespace lab4
 			mPoints[idx] = mPoints[idx + 1];
 		}
 
-		//delete p;
+		delete p;
 
-		mPoints[--mPointCount] = p;
+		mPoints[--mPointCount] = NULL;
 
 		return true;
 	}
@@ -135,7 +135,7 @@ namespace lab4
 	{
 		if (i >= mPointCount)
 		{
-			return nullptr;
+			return NULL;
 		}
 
 		return mPoints[i];
