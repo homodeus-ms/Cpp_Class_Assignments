@@ -12,7 +12,7 @@ namespace lab4
 
 	PolyLine::~PolyLine()
 	{
-		for (int i = 0; i < mPointCount; ++i)
+		for (unsigned int i = 0; i < mPointCount; ++i)
 		{
 			delete mPoints[i];
 			mPoints[i] = NULL;
@@ -60,8 +60,10 @@ namespace lab4
 		{
 			return false;
 		}
+
+		Point* p = new Point((*point).GetX(), (*point).GetY());
 		
-		mPoints[mPointCount++] = point;
+		mPoints[mPointCount++] = p;
 
 		return true;
 	}
