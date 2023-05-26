@@ -253,12 +253,25 @@ void doNothing()
 
 	cout << pl1.mPoints[0]->GetX() << " " << pl1.mPoints[0]->GetY() << endl;
 }
+void doSomething2()
+{
+	PolyLine pl1;
+	
+	pl1.AddPoint(1.0f, 2.0f);
+
+	PolyLine pl2(pl1);
+
+
+	cout << pl1.mPoints[0]->GetX() << " " << pl1.mPoints[0]->GetY() << endl;
+	cout << pl2.mPoints[0]->GetX() << " " << pl2.mPoints[0]->GetY() << endl;
+}
 
 
 int main()
 {
 	const double EPSILON = 0.0009765625;
 
+	doSomething2();
 	doSomething();
 	doNothing();
 	

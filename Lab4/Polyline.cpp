@@ -34,6 +34,7 @@ namespace lab4
 		for (unsigned int i = 0; i < mPointCount; ++i)
 		{
 			const Point* p = new const Point(*(other.mPoints[i]));
+			delete mPoints[i];
 			mPoints[i] = p;
 		}
 
