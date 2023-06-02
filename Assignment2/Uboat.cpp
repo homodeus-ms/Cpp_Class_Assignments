@@ -30,4 +30,5 @@ namespace assignment2
 		unsigned int diveSpeed = GetDiveSpeed();
 
 		return sailSpeed > diveSpeed ? sailSpeed : diveSpeed;
+	}
 }
