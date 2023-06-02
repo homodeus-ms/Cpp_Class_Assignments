@@ -16,18 +16,21 @@ namespace assignment2
 	unsigned int Airplane::GetFlySpeed() const
 	{
 		int x = static_cast<int>(GetPassengersTotalWeight());
-				
-		return static_cast<unsigned int>(200 * pow(EULERS_NUMBER, (800 - x) / 500.0) + 0.5);
+		
+		return CalPlaneSpeed(x, 200, 800, 500.0);
 	}
 	unsigned int Airplane::GetDriveSpeed() const
 	{
 		int x = static_cast<int>(GetPassengersTotalWeight());
 
-		return static_cast<unsigned int>(4 * pow(EULERS_NUMBER, (400 - x) / 70.0) + 0.5);
+		return CalPlaneSpeed(x, 4, 400, 70.0);
 	}
 	unsigned int Airplane::GetMaxSpeed() const
 	{
-		return GetFlySpeed();
+		unsigned int flySpeed = GetFlySpeed();
+		unsigned int driveSpeed = GetDriveSpeed();
+
+		return flySpeed > driveSpeed ? flySpeed : driveSpeed;
 	}
 
 	Boatplane Airplane::operator+(Boat& boat)

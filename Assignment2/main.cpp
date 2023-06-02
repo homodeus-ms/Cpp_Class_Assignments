@@ -18,6 +18,9 @@ using namespace std;
 
 int main()
 {
+	Boatplane* a1 = new Boatplane(2);
+
+	cout << a1->GetFlySpeed() << " " << a1->GetSailSpeed() << endl;
 
 	std::cout << "No Assert!" << std::endl;
 

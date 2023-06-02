@@ -1,6 +1,6 @@
 #include "Motorcycle.h"
 
-#define MIN_SPEED_WEIGHT (131)
+constexpr auto MIN_SPEED_WEIGHT = (131);
 
 namespace assignment2
 {
