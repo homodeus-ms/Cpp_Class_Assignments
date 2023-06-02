@@ -2,20 +2,20 @@
 
 namespace assignment2
 {
-	DeusExMachina* DeusExMachina::instance = nullptr;
+	DeusExMachina* DeusExMachina::mInstance = nullptr;
 
 	DeusExMachina* DeusExMachina::GetInstance()
 	{
-		if (instance == nullptr)
+		if (mInstance == nullptr)
 		{
-			instance = new DeusExMachina;
+			mInstance = new DeusExMachina;
 		}
 
-		return instance;
+		return mInstance;
 	}
 	DeusExMachina::~DeusExMachina()
 	{
-		delete instance;
+		delete mInstance;
 	}
 
 	void DeusExMachina::Travel() const
@@ -30,35 +30,35 @@ namespace assignment2
 			case PLANE:
 				if (turnValue % 4 == 0)
 				{
-					instance->mMovingData.movingCount[i]++;
+					mInstance->mMovingData.movingCount[i]++;
 				}
 				break;
 
 			case BOAT:
 				if (turnValue % 3 < 2)
 				{
-					instance->mMovingData.movingCount[i]++;
+					mInstance->mMovingData.movingCount[i]++;
 				}
 				break;
 
 			case AUTOMOBILE:
 				if (turnValue % 6 != 5)
 				{
-					instance->mMovingData.movingCount[i]++;
+					mInstance->mMovingData.movingCount[i]++;
 				}
 				break;
 
 			case AUTOMOBILE_WITH_TRAILER:
 				if (turnValue % 7 < 5)
 				{
-					instance->mMovingData.movingCount[i]++;
+					mInstance->mMovingData.movingCount[i]++;
 				}
 				break;
 
 			case UBOAT:
 				if (turnValue % 6 < 2)
 				{
-					instance->mMovingData.movingCount[i]++;
+					mInstance->mMovingData.movingCount[i]++;
 				}
 				break;
 
@@ -67,7 +67,7 @@ namespace assignment2
 				break;
 			}
 
-			instance->mMovingData.turn[i]++;
+			mInstance->mMovingData.turn[i]++;
 		}
 	}
 
@@ -161,6 +161,6 @@ namespace assignment2
 	
 	DeusExMachina DeusExMachina::operator=(const DeusExMachina& other)
 	{
-		return *instance;
+		return *mInstance;
 	}
 }

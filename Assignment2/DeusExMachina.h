@@ -22,7 +22,7 @@ namespace assignment2
 		DeusExMachina operator=(const DeusExMachina& other);
 		~DeusExMachina();
 
-		static DeusExMachina* instance;
+		static DeusExMachina* mInstance;
 
 		Vehicle* mVehicles[MAX_VEHICLES];
 		unsigned int mCurrVehicles;

@@ -11,6 +11,9 @@ namespace assignment2
 		Vehicle(unsigned int maxPassengersCount);
 		virtual ~Vehicle();
 
+		Vehicle(const Vehicle& other);
+		Vehicle& operator=(const Vehicle& other);
+
 		virtual unsigned int GetMaxSpeed() const = 0;
 
 		bool AddPassenger(const Person* person);
@@ -29,6 +32,6 @@ namespace assignment2
 		unsigned int mPassengersTotalWeight;
 
 	protected:
-		eTransportType mType = DEFAULT;
+		eTransportType mType;
 	};
 }

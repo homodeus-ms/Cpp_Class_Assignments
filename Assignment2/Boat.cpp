@@ -17,32 +17,6 @@ namespace assignment2
 	Boatplane Boat::operator+(Airplane& plane)
 	{
 		return plane + *this;
-
-		/*
-
-		Boatplane bp(GetMaxPassengersCount() + plane.GetMaxPassengersCount());
-
-		unsigned int count = plane.GetPassengersCount();
-
-		for (unsigned int i = 0; i < count; ++i)
-		{
-			Person* p = new Person(GetPassenger(i));
-			RemovePassenger(i);
-			bp.AddPassenger(p);
-		}
-
-		count = GetPassengersCount();
-
-		for (unsigned int i = 0; i < count; ++i)
-		{
-			Person* p = new Person(GetPassenger(i));
-			RemovePassenger(i);
-			bp.AddPassenger(p);
-		}
-
-		return bp;
-
-		*/
 	}
 	unsigned int Boat::GetSailSpeed() const
 	{

@@ -15,7 +15,7 @@ namespace assignment2
 	}
 	unsigned int Airplane::GetFlySpeed() const
 	{
-		int x = static_cast<int>(GetPassengersTotalWeight());
+		int x = GetPassengersTotalWeight();
 				
 		return CalFlySpeed(x, 200, 800, 500.0);
 	}
