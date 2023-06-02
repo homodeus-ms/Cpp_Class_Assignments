@@ -17,13 +17,13 @@ namespace assignment2
 	{
 		int x = static_cast<int>(GetPassengersTotalWeight());
 				
-		return CalPlaneSpeed(x, 200, 800, 500.0);
+		return static_cast<unsigned int>(200 * pow(EULERS_NUMBER, (800 - x) / 500.0) + 0.5);
 	}
 	unsigned int Airplane::GetDriveSpeed() const
 	{
 		int x = static_cast<int>(GetPassengersTotalWeight());
 
-		return CalPlaneSpeed(x, 4, 400, 70.0);
+		return static_cast<unsigned int>(4 * pow(EULERS_NUMBER, (400 - x) / 70.0) + 0.5);
 	}
 	unsigned int Airplane::GetMaxSpeed() const
 	{

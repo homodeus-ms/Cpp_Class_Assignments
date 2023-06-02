@@ -24,7 +24,7 @@ namespace assignment2
 		unsigned int GetPassengersTotalWeight() const;
 
 		eTransportType GetType() const;
-
+		
 	private:
 		unsigned int mCurrPassengersCount;
 		unsigned int mMaxPassengersCount;

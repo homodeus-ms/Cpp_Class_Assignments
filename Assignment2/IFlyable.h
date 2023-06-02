@@ -6,7 +6,7 @@
 
 inline unsigned int CalPlaneSpeed(int x, int a, int b, double c)
 {
-	return static_cast<unsigned int>((a * pow(EULERS_NUMBER, (b - x) / c) + 0.5));
+	return static_cast<unsigned int>(a * pow(EULERS_NUMBER, (b - x) / c) + 0.5);
 }
 
 namespace assignment2

@@ -163,4 +163,5 @@ namespace assignment2
 	{
 		return *mInstance;
 	}
+
 }

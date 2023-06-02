@@ -1,5 +1,4 @@
 #include "Vehicle.h"
-#include <iostream>
 
 namespace assignment2
 {
@@ -120,4 +119,5 @@ namespace assignment2
 	{
 		return mType;
 	}
+
 }
