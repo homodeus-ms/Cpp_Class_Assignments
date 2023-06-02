@@ -1,6 +1,6 @@
 #include "Motorcycle.h"
 
-#define MIN_SPEED_WEIGHT (130)
+#define MIN_SPEED_WEIGHT (131)
 
 namespace assignment2
 {
@@ -17,7 +17,7 @@ namespace assignment2
 	{
 		unsigned int x = GetPassengersTotalWeight();
 
-		return x <= MIN_SPEED_WEIGHT ? static_cast<unsigned int>(-1 * pow(x / 15.0, 3) + (2 * x) + 400) : 0;
+		return x < MIN_SPEED_WEIGHT ? static_cast<unsigned int>(-1 * pow(x / 15.0, 3) + 2 * x + 400) : 0;
 	}
 	unsigned int Motorcycle::GetMaxSpeed() const
 	{

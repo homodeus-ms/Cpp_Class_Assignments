@@ -1,8 +1,8 @@
 #pragma once
 
-inline unsigned int CalSailSpeed(unsigned int totalWeight, double coefficient)
+inline unsigned int CalSailSpeed(int totalWeight, double coefficient)
 {
-	return (800 - coefficient * totalWeight) > 20 ? static_cast<unsigned int>((800 - coefficient * totalWeight)) : 20;
+	return (800 - coefficient * totalWeight) > 20 ? static_cast<unsigned int>((800 - coefficient * totalWeight) + 0.5) : 20;
 }
 
 namespace assignment2

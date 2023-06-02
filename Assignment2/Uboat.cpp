@@ -14,13 +14,13 @@ namespace assignment2
 	
 	unsigned int UBoat::GetDiveSpeed() const
 	{
-		unsigned int x = GetPassengersTotalWeight();
+		int x = static_cast<int>(GetPassengersTotalWeight());
 		
-		return static_cast<unsigned int>(500 * log10((x + 150) / 150.0) + 30 + 0.5);
+		return static_cast<unsigned int>(500 * log((x + 150) / 150.0) + 30 + 0.5);
 	}
 	unsigned int UBoat::GetSailSpeed() const
 	{
-		unsigned int x = GetPassengersTotalWeight();
+		int x = static_cast<int>(GetPassengersTotalWeight());
 		double speed = 550 - x / 10.0;
 		return speed > 200 ? static_cast<unsigned int>(speed + 0.5) : 200;
 	}

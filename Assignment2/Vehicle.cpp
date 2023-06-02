@@ -1,4 +1,5 @@
 #include "Vehicle.h"
+#include <iostream>
 
 namespace assignment2
 {
@@ -7,16 +8,11 @@ namespace assignment2
 		, mCurrPassengersCount(0), mPassengersTotalWeight(0), mType(DEFAULT)
 	{
 		mPassengers = new const Person*[mMaxPassengersCount];
+		memset(mPassengers, 0, sizeof(Person*) * mMaxPassengersCount);
 	}
 
 	Vehicle::~Vehicle()
 	{
-		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
-		{
-			delete mPassengers[i];
-			mPassengers[i] = nullptr;
-		}
-
 		delete[] mPassengers;
 		
 		mPassengersTotalWeight = 0;
@@ -30,35 +26,31 @@ namespace assignment2
 
 		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
 		{
-			const Person* p = new const Person(*(other.mPassengers[i]));
+			const Person* p = new const Person(*(other.GetPassenger(i)));
 			mPassengers[i] = p;
 		}
 	}
 
 	Vehicle& Vehicle::operator=(const Vehicle& other)
 	{
-		bool bNewGenerated = false;
-
-		if (mMaxPassengersCount < other.GetMaxPassengersCount())
+		if (this == &other)
 		{
-			delete[] mPassengers;
-			mPassengers = new const Person * [other.GetMaxPassengersCount()];
-			bNewGenerated = true;
+			return *this;
 		}
 
+		delete[] mPassengers;
+		
 		mType = other.GetType();
 		mCurrPassengersCount = other.GetPassengersCount(); 
+		mMaxPassengersCount = other.GetMaxPassengersCount();
 		mPassengersTotalWeight = other.GetPassengersTotalWeight();
 
-		for (unsigned int i = 0; i < other.mCurrPassengersCount; ++i)
-		{
-			const Person* p = new const Person(*(other.mPassengers[i]));
+		mPassengers = new const Person*[mMaxPassengersCount];
 
-			if (bNewGenerated == false)
-			{
-				delete mPassengers[i];
-			}
-			
+		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
+		{
+			const Person* p = new const Person(*(other.GetPassenger(i)));
+
 			mPassengers[i] = p;
 		}
 

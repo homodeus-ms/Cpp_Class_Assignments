@@ -17,27 +17,33 @@ using namespace std;
 
 int main()
 {
-	Person* p = new Person("Bob", 85);
+	Person* p = new Person("Bob", 70);
 
-	assert(p->GetName() == std::string("Bob"));
-	assert(p->GetWeight() == 85);
-
-	Person* p2 = new Person("James", 45);
+	Person* p2 = new Person("James", 61);
 	Person* p3 = new Person("Tina", 52);
 
 	Person* p4 = new Person("Peter", 3319);
 	Person* p5 = new Person("Jane", 48);
 	Person* p6 = new Person("Steve", 88);
 
-	UBoat* u1 = new UBoat();
+	Boat* b1 = new Boat(5);
+	Boat* b2 = new Boat(7);
 
-	u1->AddPassenger(p);
-	u1->AddPassenger(p2);
-	u1->AddPassenger(p3);
-	u1->AddPassenger(p4);
+	b1->AddPassenger(p);
+	b1->AddPassenger(p2);
+
+	b2->AddPassenger(p3);
+	b2->AddPassenger(p4);
+	b2->AddPassenger(p5);
+
+	Boat* b3 = new Boat(*b1);
+
+	cout << b1->GetPassenger(0)->GetName() << " " << b1->GetPassenger(1)->GetName() << endl;
+
+	delete b2;
+	delete b1;
 	
-	//ap1 182키로 , 그 다음은 + 3500 - 182 = 3318
-	cout << u1->GetSailSpeed() << " " << u1->GetDiveSpeed() << endl;
+	cout << b3->GetPassenger(0)->GetName() << " " << b3->GetPassenger(1)->GetName() << endl;
 
 	std::cout << "No Assert!" << std::endl;
 
