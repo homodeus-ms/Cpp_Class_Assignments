@@ -94,13 +94,33 @@ void TestBoatplane()
 
 
 }
+void TestSedan()
+{
+	Sedan* s1 = new Sedan();
+	Trailer* t1 = new Trailer(500);
+	Trailer* t2 = new Trailer(300);
+
+	s1->AddTrailer(t1);
+
+	Sedan* s2 = new Sedan(*s1);
+	s2->AddTrailer(t2);
+
+	*s1 = *s2;
+
+	delete s2;
+	delete s1;
+
+	cout << "???" << endl;
+
+}
 
 int main()
 {
 	
 	//TestDeleteAirplane();
 	//DoSomething();
-	TestBoatplane();
+	//TestBoatplane();
+	TestSedan();
 
 	std::cout << "No Assert!" << std::endl;
 

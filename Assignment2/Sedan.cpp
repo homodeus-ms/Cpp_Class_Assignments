@@ -7,6 +7,27 @@ namespace assignment2
 	{
 		Vehicle::mType = AUTOMOBILE;
 	}
+	Sedan::Sedan(const Sedan& other)
+		: Vehicle(other)
+	{
+	    mTrailer = new Trailer(other.mTrailer->GetWeight());
+	}
+	Sedan& Sedan::operator=(const Sedan& other)
+	{
+		Vehicle::operator=(other);
+
+		if (mTrailer == nullptr)
+		{
+			mTrailer = new Trailer(other.mTrailer->GetWeight());
+		}
+		else
+		{
+			delete mTrailer;
+			mTrailer = new Trailer(other.mTrailer->GetWeight());
+		}
+
+		return *this;
+	}
 
 	Sedan::~Sedan()
 	{

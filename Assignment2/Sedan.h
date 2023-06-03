@@ -13,15 +13,17 @@ namespace assignment2
 	public:
 		Sedan();
 		virtual ~Sedan();
+		Sedan(const Sedan& other);
+		Sedan& operator=(const Sedan& other);
 
 		bool AddTrailer(const Trailer* trailer);
 		bool RemoveTrailer();
 
 		unsigned int GetDriveSpeed() const;
 		unsigned int GetMaxSpeed() const;
-
+		
 	private:
-		const Trailer* mTrailer;
+		const Trailer* mTrailer = nullptr;
 
 	};
 }
