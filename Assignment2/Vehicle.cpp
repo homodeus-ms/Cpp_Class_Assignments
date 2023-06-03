@@ -12,7 +12,14 @@ namespace assignment2
 
 	Vehicle::~Vehicle()
 	{
+		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
+		{
+			delete mPassengers[i];
+			mPassengers[i] = nullptr;
+		}
+
 		delete[] mPassengers;
+		mPassengers = nullptr;
 		
 		mPassengersTotalWeight = 0;
 	}
@@ -36,6 +43,12 @@ namespace assignment2
 		{
 			return *this;
 		}
+		
+		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
+		{
+			delete mPassengers[i];
+			mPassengers[i] = nullptr;
+		}
 
 		delete[] mPassengers;
 		
@@ -55,7 +68,7 @@ namespace assignment2
 
 		return *this;
 	}
-
+	
 	bool Vehicle::AddPassenger(const Person* person)
 	{
 		if (mCurrPassengersCount == mMaxPassengersCount)
@@ -119,5 +132,4 @@ namespace assignment2
 	{
 		return mType;
 	}
-
 }

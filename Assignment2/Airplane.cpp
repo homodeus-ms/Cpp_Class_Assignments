@@ -41,7 +41,7 @@ namespace assignment2
 
 		for (unsigned int i = 0; i < count; ++i)
 		{
-			Person* p = new Person(GetPassenger(0));
+			Person* p = new Person(*GetPassenger(0));
 			RemovePassenger(0);
 			bp.AddPassenger(p);
 		}
@@ -50,7 +50,7 @@ namespace assignment2
 
 		for (unsigned int i = 0; i < count; ++i)
 		{
-			Person* p = new Person(boat.GetPassenger(0));
+			Person* p = new Person(*(boat.GetPassenger(0)));
 			boat.RemovePassenger(0);
 			bp.AddPassenger(p);
 		}
