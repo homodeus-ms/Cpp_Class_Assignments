@@ -10,12 +10,28 @@ namespace assignment2
 	Sedan::Sedan(const Sedan& other)
 		: Vehicle(other)
 	{
-	    mTrailer = new Trailer(other.mTrailer->GetWeight());
+		if (other.mTrailer != nullptr)
+		{
+			mTrailer = new Trailer(other.mTrailer->GetWeight());
+		}
 	}
 	Sedan& Sedan::operator=(const Sedan& other)
 	{
-		Vehicle::operator=(other);
+		if (this == &other)
+		{
+			return *this;
+		}
 
+		Vehicle::operator=(other);
+		
+		if (other.mTrailer == nullptr)
+		{
+			delete mTrailer;
+			mTrailer = nullptr;
+
+			return *this;
+		}
+		
 		if (mTrailer == nullptr)
 		{
 			mTrailer = new Trailer(other.mTrailer->GetWeight());

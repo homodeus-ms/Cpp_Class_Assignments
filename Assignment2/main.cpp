@@ -103,9 +103,11 @@ void TestSedan()
 	s1->AddTrailer(t1);
 
 	Sedan* s2 = new Sedan(*s1);
-	s2->AddTrailer(t2);
+	//s2->AddTrailer(t2);
 
-	*s1 = *s2;
+	*s2 = *s1;
+
+	
 
 	delete s2;
 	delete s1;
