@@ -271,11 +271,15 @@ int main()
 {
 	const double EPSILON = 0.0009765625;
 
-	doSomething2();
-	doSomething();
-	doNothing();
+	Point point(1, 2);
+	Point* p = &point;
+
+	PolyLine pl1;
+	pl1.AddPoint(p);
+
+	cout << pl1.mPoints[0]->GetX() << " " << pl1.mPoints[0]->GetY() << endl;
 	
-	cout << "No Assert" << endl;
+	//cout << "No Assert" << endl;
 
 	return 0;
 }
