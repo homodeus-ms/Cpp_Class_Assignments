@@ -21,7 +21,7 @@ namespace lab6
 
 		if (length == 0)
 		{
-			return 0x7FFF;
+			return 0x7FFFFFFF;
 		}
 
 		int min = v[0];
@@ -43,7 +43,7 @@ namespace lab6
 
 		if (length == 0)
 		{
-			return 0x8000;
+			return 0x80000000;
 		}
 
 		int max = v[0];
@@ -64,7 +64,7 @@ namespace lab6
 		int sum = Sum(v);
 		float size = static_cast<float>(v.size());
 
-		return sum / size;
+		return size == 0 ? 0 : sum / size;
 	}
 
 	int NumberWithMaxOccurrence(const std::vector<int>& v)
@@ -75,77 +75,61 @@ namespace lab6
 		{
 			return 0;
 		}
+		
+		Data data;
+		data.Pointers = new const int* [size];
+		data.Counts = new int[size];
 
 		for (int i = 0; i < size; ++i)
 		{
-			assert(v[i] != INT_MIN);
+			data.Pointers[i] = nullptr;
+			data.Counts[i] = 1;
 		}
+		
+		data.Pointers[0] = &v[0];
 
-		Data data;
-		data.length = size << 1;
-		data.length = GetNextPrimeNum(data.length);
+		int pointersCount = 1;
 
-		data.nums = new int[data.length];
-		data.counts = new int[data.length];
+		bool bSame;
 
-		for (int i = 0; i < data.length; ++i)
+		for (int i = 1; i < size; ++i)
 		{
-			data.nums[i] = INT_MIN;
-			data.counts[i] = 1;
-		}
+			bSame = false;
 
-		for (std::vector<int>::const_iterator iter = v.begin(); iter != v.end(); ++iter)
-		{
-			int hash = *iter % data.length;
-			assert(AddValue(data, hash) == true);
-		}
-
-		int maxValueIndex = 0;
-
-		for (int i = 1; i < data.length; ++i)
-		{
-			if (data.counts[maxValueIndex] < data.counts[i + 1])
+			for (int j = 0; j < pointersCount; ++j)
 			{
-				maxValueIndex = i + 1;
+				if (*data.Pointers[j] == v[i])
+				{
+					data.Counts[j]++;
+					bSame = true;
+					break;
+				}
+			}
+
+			if (bSame == false)
+			{
+				data.Pointers[pointersCount++] = &v[i];
 			}
 		}
 
-		int result = data.nums[maxValueIndex];
+		int maxIndex = 0;
 
-		delete[] data.nums;
-		delete[] data.counts;
+		for (int i = 1; i < pointersCount; ++i)
+		{
+			if (data.Counts[maxIndex] < data.Counts[i])
+			{
+				maxIndex = i;
+			}
+		}
+
+		int result = *data.Pointers[maxIndex];
+
+		delete[] data.Counts;
+		delete[] data.Pointers;
 
 		return result;
 	}
-	bool AddValue(Data& data, int hash)
-	{
-		if (hash < 0)
-		{
-			hash += data.length;
-		}
-
-		int start = hash;
-
-		do
-		{
-			if (data.nums[hash] == hash)
-			{
-				data.counts[hash]++;
-				return true;
-			}
-			else if (data.nums[hash] == INT_MIN)
-			{
-				data.nums[hash] = hash;
-				return true;
-			}
-
-			hash = ++hash % data.length;
-
-		} while (hash != start);
-
-		return false;
-	}
-
+	
 	void SortDescending(std::vector<int>& v)
 	{
 		int size = v.size();

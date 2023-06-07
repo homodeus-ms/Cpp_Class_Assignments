@@ -11,9 +11,8 @@ inline void Swap(std::vector<int>& v, int i, int j)
 
 struct Data
 {
-	int length = 0;
-	int* nums = nullptr;
-	int* counts = nullptr;
+	const int** Pointers = nullptr;
+	int* Counts = nullptr;
 };
 
 namespace lab6
@@ -26,7 +25,7 @@ namespace lab6
 	void SortDescending(std::vector<int>& v);
 
 	int GetNextPrimeNum(int n);
-	bool AddValue(Data& data, int hash);
+	
 	void SortRecursive(std::vector<int>& v, int left, int right);
 	int GetPivot(std::vector<int>& v, int left, int right);
 }
