@@ -25,8 +25,6 @@ namespace lab6
 	int NumberWithMaxOccurrence(const std::vector<int>& v);
 	void SortDescending(std::vector<int>& v);
 
-	int GetNextPrimeNum(int n);
-	
 	void SortRecursive(std::vector<int>& v, int left, int right);
 	int GetPivot(std::vector<int>& v, int left, int right);
 }

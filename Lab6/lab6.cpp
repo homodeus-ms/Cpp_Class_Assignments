@@ -75,29 +75,39 @@ namespace lab6
 		{
 			return 0;
 		}
+		
+		vector<int> copied(v);
 
-		map<int, int> map1;
+		SortDescending(copied);
 
-		for (vector<int>::const_iterator it = v.begin(); it != v.end(); ++it)
+		int maxCount = 1;
+		int currCount = 1;
+		vector<int>::const_iterator maxIt;
+		vector<int>::const_iterator currIt;
+
+		for (currIt = copied.begin(); currIt != copied.end() - 1; ++currIt)
 		{
-			map1[*it] = map1[*it] + 1;
-		}
+			vector<int>::const_iterator nextIt = currIt + 1;
 
-		map<int, int>::iterator iter = map1.begin();
-
-		map<int, int>::iterator maxIter = iter;
-
-		++iter;
-
-		for (iter; iter != map1.end(); ++iter)
-		{
-			if (maxIter->second < iter->second)
+			if (*nextIt == *currIt)
 			{
-				maxIter = iter;
+				currCount++;
+			}
+			else if (currCount > maxCount)
+			{
+				maxCount = currCount;
+				currCount = 1;
+				maxIt = currIt;
+			}
+			else
+			{
+				currCount = 1;
 			}
 		}
 
-		return maxIter->first;
+		maxIt = currCount > maxCount ? currIt : maxIt;
+
+		return *maxIt;
 	}
 	
 	void SortDescending(std::vector<int>& v)
@@ -110,34 +120,6 @@ namespace lab6
 		}
 
 		SortRecursive(v, 0, size - 1);
-	}
-
-	int GetNextPrimeNum(int n)
-	{
-		assert(n >= 1);
-
-		--n;
-
-		while (true)
-		{
-			bool bPrimeNum = true;
-			n += 2;
-			int end = n / 2;
-
-			for (int i = 2; i < end; ++i)
-			{
-				if (n % i == 0)
-				{
-					bPrimeNum = false;
-					break;
-				}
-			}
-
-			if (bPrimeNum == true)
-			{
-				return n;
-			}
-		}
 	}
 
 	void SortRecursive(std::vector<int>& v, int left, int right)
