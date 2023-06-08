@@ -71,6 +71,11 @@ namespace lab6
 
 	int NumberWithMaxOccurrence(const std::vector<int>& v)
 	{
+		if (v.size() == 0)
+		{
+			return 0;
+		}
+
 		map<int, int> map1;
 
 		for (vector<int>::const_iterator it = v.begin(); it != v.end(); ++it)
