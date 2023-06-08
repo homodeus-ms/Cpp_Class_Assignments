@@ -1,6 +1,8 @@
 #include <cassert>
 #include "Lab6.h"
 
+using namespace std;
+
 namespace lab6
 {
 	int Sum(const std::vector<int>& v)
@@ -69,65 +71,28 @@ namespace lab6
 
 	int NumberWithMaxOccurrence(const std::vector<int>& v)
 	{
-		int size = v.size();
+		map<int, int> map1;
 
-		if (size == 0)
+		for (vector<int>::const_iterator it = v.begin(); it != v.end(); ++it)
 		{
-			return 0;
+			map1[*it] = map1[*it] + 1;
 		}
-		
-		Data data;
-		data.Pointers = new const int* [size];
-		data.Counts = new int[size];
 
-		for (int i = 0; i < size; ++i)
+		map<int, int>::iterator iter = map1.begin();
+
+		map<int, int>::iterator maxIter = iter;
+
+		++iter;
+
+		for (iter; iter != map1.end(); ++iter)
 		{
-			data.Pointers[i] = nullptr;
-			data.Counts[i] = 1;
-		}
-		
-		data.Pointers[0] = &v[0];
-
-		int pointersCount = 1;
-
-		bool bSame;
-
-		for (int i = 1; i < size; ++i)
-		{
-			bSame = false;
-
-			for (int j = 0; j < pointersCount; ++j)
+			if (maxIter->second < iter->second)
 			{
-				if (*data.Pointers[j] == v[i])
-				{
-					data.Counts[j]++;
-					bSame = true;
-					break;
-				}
-			}
-
-			if (bSame == false)
-			{
-				data.Pointers[pointersCount++] = &v[i];
+				maxIter = iter;
 			}
 		}
 
-		int maxIndex = 0;
-
-		for (int i = 1; i < pointersCount; ++i)
-		{
-			if (data.Counts[maxIndex] < data.Counts[i])
-			{
-				maxIndex = i;
-			}
-		}
-
-		int result = *data.Pointers[maxIndex];
-
-		delete[] data.Counts;
-		delete[] data.Pointers;
-
-		return result;
+		return maxIter->first;
 	}
 	
 	void SortDescending(std::vector<int>& v)
