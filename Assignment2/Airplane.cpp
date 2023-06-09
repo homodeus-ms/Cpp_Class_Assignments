@@ -37,7 +37,7 @@ namespace assignment2
 	{
 		Boatplane bp(GetMaxPassengersCount() + boat.GetMaxPassengersCount());
 
-		int currCount = GetPassengersCount();
+		unsigned int currCount = GetPassengersCount();
 
 		for (unsigned int i = 0; i < currCount; ++i)
 		{

@@ -151,6 +151,7 @@ namespace assignment2
 		return mVehicles[furthestTravelledIdx];
 	}
 	DeusExMachina::DeusExMachina()
+		: mCurrVehicles(0)
 	{
 	}
 	DeusExMachina::DeusExMachina(const DeusExMachina& other)
