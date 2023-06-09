@@ -23,6 +23,7 @@ namespace assignment2
 		for (unsigned int i = 0; i < mCurrVehicles; ++i)
 		{
 			eTransportType type = mVehicles[i]->GetType();
+
 			unsigned int turnValue = mMovingData.turn[i];
 
 			switch (type)
@@ -115,7 +116,7 @@ namespace assignment2
 		{
 			return NULL;
 		}
-
+		/*
 		bool bNotTravelled = true;
 
 		for (unsigned int i = 0; i < mCurrVehicles; ++i)
@@ -131,6 +132,7 @@ namespace assignment2
 		{
 			return mVehicles[0];
 		}
+		*/
 
 		unsigned int furthestTravelledIdx = 0;
 		unsigned int furthestTravelledDistance = mMovingData.movingCount[0] * mVehicles[0]->GetMaxSpeed();
@@ -149,19 +151,14 @@ namespace assignment2
 		return mVehicles[furthestTravelledIdx];
 	}
 	DeusExMachina::DeusExMachina()
-		: mCurrVehicles(0)
 	{
-		memset(mVehicles, 0, sizeof(mVehicles));
 	}
 	DeusExMachina::DeusExMachina(const DeusExMachina& other)
-		: mCurrVehicles(other.mCurrVehicles)
 	{
-		memcpy(mVehicles, other.mVehicles, sizeof(mVehicles));
 	}
 	
 	DeusExMachina DeusExMachina::operator=(const DeusExMachina& other)
 	{
-		return *mInstance;
+		return *this;
 	}
-
 }

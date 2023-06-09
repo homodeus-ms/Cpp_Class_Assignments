@@ -24,6 +24,5 @@ namespace assignment2
 		
 	private:
 		const Trailer* mTrailer = nullptr;
-
 	};
 }

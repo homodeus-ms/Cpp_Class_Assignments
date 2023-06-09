@@ -29,7 +29,6 @@ namespace assignment2
 		unsigned int mCurrPassengersCount;
 		unsigned int mMaxPassengersCount;
 		const Person** mPassengers = nullptr;
-		unsigned int mPassengersTotalWeight;
 
 	protected:
 		eTransportType mType;

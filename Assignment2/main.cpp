@@ -96,16 +96,24 @@ void TestBoatplane()
 }
 void TestSedan()
 {
+	Person* a = new Person("aaa", 50);
+	Person* b = new Person("bbb", 100);
+	Person* c = new Person("ccc", 150);
+
 	Sedan* s1 = new Sedan();
+	Sedan* s2 = new Sedan();
 	Trailer* t1 = new Trailer(500);
 	Trailer* t2 = new Trailer(300);
 
 	s1->AddTrailer(t1);
+	s1->AddPassenger(a);
+	s1->AddPassenger(b);
 
-	Sedan* s2 = new Sedan(*s1);
+	s2->AddPassenger(c);
+	
 	//s2->AddTrailer(t2);
 
-	*s2 = *s1;
+	*s1 = *s2;
 
 	
 
@@ -118,11 +126,8 @@ void TestSedan()
 
 int main()
 {
-	
-	//TestDeleteAirplane();
-	//DoSomething();
-	//TestBoatplane();
 	TestSedan();
+	
 
 	std::cout << "No Assert!" << std::endl;
 

@@ -21,11 +21,10 @@ namespace assignment2
 		DeusExMachina();
 		DeusExMachina(const DeusExMachina& other);
 		DeusExMachina operator=(const DeusExMachina& other);
-		//~DeusExMachina();
 
 		static DeusExMachina* mInstance;
 
-		Vehicle* mVehicles[MAX_VEHICLES];
+		Vehicle* mVehicles[MAX_VEHICLES];  // MAX_VEHICLES = 10
 		unsigned int mCurrVehicles;
 
 		MovingData mMovingData = { 0, };

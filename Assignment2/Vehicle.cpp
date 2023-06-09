@@ -1,10 +1,12 @@
+#include <cassert>
 #include "Vehicle.h"
 
 namespace assignment2
 {
 	Vehicle::Vehicle(unsigned int maxPassengersCount)
 		: mMaxPassengersCount(maxPassengersCount)
-		, mCurrPassengersCount(0), mPassengersTotalWeight(0), mType(DEFAULT)
+		, mCurrPassengersCount(0)
+		, mType(DEFAULT) // mType will be filled at bass constructor
 	{
 		mPassengers = new const Person*[mMaxPassengersCount];
 		memset(mPassengers, 0, sizeof(Person*) * mMaxPassengersCount);
@@ -20,15 +22,15 @@ namespace assignment2
 
 		delete[] mPassengers;
 		mPassengers = nullptr;
-		
-		mPassengersTotalWeight = 0;
 	}
 
 	Vehicle::Vehicle(const Vehicle& other)
 		: mMaxPassengersCount(other.GetMaxPassengersCount()), mType(other.GetType())
-		, mCurrPassengersCount(other.GetPassengersCount()), mPassengersTotalWeight(other.GetPassengersTotalWeight())
+		, mCurrPassengersCount(other.GetPassengersCount())
 	{
 		mPassengers = new const Person*[mMaxPassengersCount];
+		
+		assert(mCurrPassengersCount <= mMaxPassengersCount);
 
 		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
 		{
@@ -55,9 +57,10 @@ namespace assignment2
 		mType = other.GetType();
 		mCurrPassengersCount = other.GetPassengersCount(); 
 		mMaxPassengersCount = other.GetMaxPassengersCount();
-		mPassengersTotalWeight = other.GetPassengersTotalWeight();
 
 		mPassengers = new const Person*[mMaxPassengersCount];
+
+		assert(mCurrPassengersCount <= mMaxPassengersCount);
 
 		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
 		{
@@ -78,8 +81,6 @@ namespace assignment2
 
 		mPassengers[mCurrPassengersCount++] = person;
 
-		mPassengersTotalWeight += person->GetWeight();
-
 		return true;
 	}
 
@@ -90,9 +91,8 @@ namespace assignment2
 			return false;
 		}
 
-		mPassengersTotalWeight -= mPassengers[i]->GetWeight();
-
 		delete mPassengers[i];
+
 		mPassengers[i] = nullptr;
 
 		for (unsigned int idx = i; idx < mCurrPassengersCount - 1; ++idx)
@@ -125,7 +125,14 @@ namespace assignment2
 	}
 	unsigned int Vehicle::GetPassengersTotalWeight() const
 	{
-		return mPassengersTotalWeight;
+		unsigned int totalWeight = 0;
+
+		for (unsigned int i = 0; i < mCurrPassengersCount; ++i)
+		{
+			totalWeight += (mPassengers[i])->GetWeight();
+		}
+
+		return totalWeight;
 	}
 
 	eTransportType Vehicle::GetType() const

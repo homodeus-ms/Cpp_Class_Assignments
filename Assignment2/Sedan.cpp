@@ -3,7 +3,7 @@
 namespace assignment2
 {
 	Sedan::Sedan()
-		: Vehicle(4), mTrailer(nullptr)
+		: Vehicle(4)
 	{
 		Vehicle::mType = AUTOMOBILE;
 	}

@@ -20,7 +20,7 @@ namespace assignment2
 	}
 	unsigned int Boat::GetSailSpeed() const
 	{
-		int x = static_cast<int>(GetPassengersTotalWeight());
+		int x = GetPassengersTotalWeight();
 		return CalSailSpeed(x, 10.0);
 	}
 	unsigned int Boat::GetMaxSpeed() const

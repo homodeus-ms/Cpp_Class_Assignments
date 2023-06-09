@@ -15,13 +15,13 @@ namespace assignment2
 	}
 	unsigned int Airplane::GetFlySpeed() const
 	{
-		int x = static_cast<int>(GetPassengersTotalWeight());
+		int x = GetPassengersTotalWeight();
 		
 		return CalPlaneSpeed(x, 200, 800, 500.0);
 	}
 	unsigned int Airplane::GetDriveSpeed() const
 	{
-		int x = static_cast<int>(GetPassengersTotalWeight());
+		int x = GetPassengersTotalWeight();
 
 		return CalPlaneSpeed(x, 4, 400, 70.0);
 	}
@@ -37,18 +37,18 @@ namespace assignment2
 	{
 		Boatplane bp(GetMaxPassengersCount() + boat.GetMaxPassengersCount());
 
-		unsigned int count = GetPassengersCount();
+		int currCount = GetPassengersCount();
 
-		for (unsigned int i = 0; i < count; ++i)
+		for (unsigned int i = 0; i < currCount; ++i)
 		{
 			Person* p = new Person(*GetPassenger(0));
 			RemovePassenger(0);
 			bp.AddPassenger(p);
 		}
 
-		count = boat.GetPassengersCount();
+		currCount = boat.GetPassengersCount();
 
-		for (unsigned int i = 0; i < count; ++i)
+		for (unsigned int i = 0; i < currCount; ++i)
 		{
 			Person* p = new Person(*(boat.GetPassenger(0)));
 			boat.RemovePassenger(0);
