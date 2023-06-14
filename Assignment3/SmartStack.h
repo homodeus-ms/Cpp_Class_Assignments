@@ -1,10 +1,8 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
 #include <limits>
 #include <stack>
-
 
 using namespace std;
 
@@ -43,7 +41,7 @@ namespace assignment3
 		, mMin(numeric_limits<T>::max())
 		, mSum(0)
 		, mSquareSum(0)
-	    , mCount(0)
+		, mCount(0)
 	{
 		mMaxs.push(mMax);
 		mMins.push(mMin);

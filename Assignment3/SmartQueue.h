@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include <iostream>
 #include <limits>
 #include <queue>
 
@@ -39,13 +38,13 @@ namespace assignment3
 		T mSquareSum;
 		unsigned int mCount;
 
-		void InitList(Node<T>* mHead, Node<T>* mEnd);
-		void InsertSorted(Node<T>* mHead, Node<T>* mEnd, T value);
-		void Destroy(Node<T>* mHead);
-		void RemoveNode(Node<T>* mHead, Node<T>* mEnd, T value);
-		T GetMaxNodeValue(Node<T>* mEnd);
-		T GetMinNodeValue(Node<T>* mHead);
-		void CopyList(Node<T>* srcHead, Node<T>* srcEnd, Node<T>* destHead, Node<T>* destEnd);
+		void initList(Node<T>* mHead, Node<T>* mEnd);
+		void insertSorted(Node<T>* mHead, Node<T>* mEnd, T value);
+		void destroy(Node<T>* mHead);
+		void removeNode(Node<T>* mHead, Node<T>* mEnd, T value);
+		T getMaxNodeValue(Node<T>* mEnd);
+		T getMinNodeValue(Node<T>* mHead);
+		void copyList(Node<T>* srcHead, Node<T>* srcEnd, Node<T>* destHead, Node<T>* destEnd);
 	};
 
 	template <typename T>
@@ -57,19 +56,19 @@ namespace assignment3
 		mHead = new Node<T>();
 		mEnd = new Node<T>();
 
-		InitList(mHead, mEnd);
+		initList(mHead, mEnd);
 	}
 
 	template <typename T>
 	SmartQueue<T>::SmartQueue(const SmartQueue& other)
-		: mSum (other.mSum)
-		, mCount (other.mCount)
-		, mSquareSum (other.mSquareSum)
+		: mSum(other.mSum)
+		, mCount(other.mCount)
+		, mSquareSum(other.mSquareSum)
 		, mQueue(other.mQueue)
 	{
 		mHead = new Node<T>();
 		mEnd = new Node<T>();
-		CopyList(other.mHead, other.mEnd, mHead, mEnd);
+		copyList(other.mHead, other.mEnd, mHead, mEnd);
 	}
 
 	template <typename T>
@@ -80,7 +79,7 @@ namespace assignment3
 			return *this;
 		}
 
-		Destroy(mHead);
+		destroy(mHead);
 
 		mSum = other.mSum;
 		mCount = other.mCount;
@@ -90,13 +89,13 @@ namespace assignment3
 		mHead = new Node<T>();
 		mEnd = new Node<T>();
 
-		CopyList(other.mHead, other.mEnd, mHead, mEnd);
+		copyList(other.mHead, other.mEnd, mHead, mEnd);
 	}
 
 	template <typename T>
 	SmartQueue<T>::~SmartQueue()
 	{
-		Destroy(mHead);
+		destroy(mHead);
 	}
 
 	template <typename T>
@@ -107,7 +106,7 @@ namespace assignment3
 		mSquareSum += (number * number);
 		mQueue.push(number);
 		
-		InsertSorted(mHead, mEnd, number);
+		insertSorted(mHead, mEnd, number);
 	}
 
 	template <typename T>
@@ -124,7 +123,7 @@ namespace assignment3
 		mSum -= poped;
 		mSquareSum -= (poped * poped);
 		mQueue.pop();
-		RemoveNode(mHead, mEnd, poped);
+		removeNode(mHead, mEnd, poped);
 
 		return poped;
 	}
@@ -132,13 +131,13 @@ namespace assignment3
 	template <typename T>
 	T SmartQueue<T>::GetMax()
 	{
-		return mCount == 0 ? numeric_limits<T>::lowest() : GetMaxNodeValue(mEnd);
+		return mCount == 0 ? numeric_limits<T>::lowest() : getMaxNodeValue(mEnd);
 	}
 
 	template <typename T>
 	T SmartQueue<T>::GetMin()
 	{
-		return mCount == 0 ? numeric_limits<T>::max() : GetMinNodeValue(mHead);
+		return mCount == 0 ? numeric_limits<T>::max() : getMinNodeValue(mHead);
 	}
 
 	template <typename T>
@@ -178,7 +177,7 @@ namespace assignment3
 	// private ÇÔ¼öµé. Linked List
 
 	template <typename T>
-	void SmartQueue<T>::InitList(Node<T>* mHead, Node<T>* mEnd)
+	void SmartQueue<T>::initList(Node<T>* mHead, Node<T>* mEnd)
 	{
 		mHead->Prev = nullptr;
 		mHead->Value = numeric_limits<T>::lowest();
@@ -190,7 +189,7 @@ namespace assignment3
 	}
 
 	template <typename T>
-	void SmartQueue<T>::InsertSorted(Node<T>* mHead, Node<T>* mEnd, T value)
+	void SmartQueue<T>::insertSorted(Node<T>* mHead, Node<T>* mEnd, T value)
 	{
 		Node<T>* newNode = new Node<T>();
 		newNode->Value = value;
@@ -212,7 +211,7 @@ namespace assignment3
 	}
 
 	template <typename T>
-	void SmartQueue<T>::Destroy(Node<T>* mHead)
+	void SmartQueue<T>::destroy(Node<T>* mHead)
 	{
 		Node<T>* p = mHead->Next;
 		while (p != nullptr)
@@ -223,7 +222,7 @@ namespace assignment3
 	}
 
 	template <typename T>
-	void SmartQueue<T>::RemoveNode(Node<T>* mHead, Node<T>* mEnd, T value)
+	void SmartQueue<T>::removeNode(Node<T>* mHead, Node<T>* mEnd, T value)
 	{
 		Node<T>* p = mHead->Next;
 
@@ -241,21 +240,21 @@ namespace assignment3
 	}
 
 	template <typename T>
-	T SmartQueue<T>::GetMaxNodeValue(Node<T>* mEnd)
+	T SmartQueue<T>::getMaxNodeValue(Node<T>* mEnd)
 	{
 		return mEnd->Prev->Value;
 	}
 
 	template <typename T>
-	T SmartQueue<T>::GetMinNodeValue(Node<T>* mHead)
+	T SmartQueue<T>::getMinNodeValue(Node<T>* mHead)
 	{
 		return mHead->Next->Value;
 	}
 
 	template <typename T>
-	void SmartQueue<T>::CopyList(Node<T>* srcHead, Node<T>* srcEnd, Node<T>* destHead, Node<T>* destEnd)
+	void SmartQueue<T>::copyList(Node<T>* srcHead, Node<T>* srcEnd, Node<T>* destHead, Node<T>* destEnd)
 	{
-		InitList(destHead, destEnd);
+		initList(destHead, destEnd);
 
 		T value;
 		Node<T>* p = srcHead->Next;
