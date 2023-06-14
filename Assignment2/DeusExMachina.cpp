@@ -116,23 +116,6 @@ namespace assignment2
 		{
 			return NULL;
 		}
-		/*
-		bool bNotTravelled = true;
-
-		for (unsigned int i = 0; i < mCurrVehicles; ++i)
-		{
-			if (mMovingData.turn[i] != 0)
-			{
-				bNotTravelled = false;
-				break;
-			}
-		}
-
-		if (bNotTravelled == true)
-		{
-			return mVehicles[0];
-		}
-		*/
 
 		unsigned int furthestTravelledIdx = 0;
 		unsigned int furthestTravelledDistance = mMovingData.movingCount[0] * mVehicles[0]->GetMaxSpeed();

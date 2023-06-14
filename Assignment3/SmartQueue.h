@@ -1,0 +1,281 @@
+#pragma once
+
+#include <cassert>
+#include <iostream>
+#include <limits>
+#include <queue>
+
+#include "Node.h"
+
+namespace assignment3
+{
+	template <typename T>
+	class SmartQueue
+	{
+	public:
+		SmartQueue();
+		~SmartQueue();
+		SmartQueue(const SmartQueue& other);
+		SmartQueue& operator=(const SmartQueue& other);
+		void Enqueue(T number);
+		T Peek();
+		T Dequeue();
+		T GetMax();
+		T GetMin();
+		double GetAverage();
+		T GetSum();
+		double GetVariance();
+		double GetStandardDeviation();
+		unsigned int GetCount();
+
+	private:
+		queue<T> mQueue;
+		Node<T>* mHead;
+		Node<T>* mEnd;
+		
+		T mSum;
+		T mSquareSum;
+		unsigned int mCount;
+
+		void InitList(Node<T>* mHead, Node<T>* mEnd);
+		void InsertSorted(Node<T>* mHead, Node<T>* mEnd, T value);
+		void Destroy(Node<T>* mHead);
+		void RemoveNode(Node<T>* mHead, Node<T>* mEnd, T value);
+		T GetMaxNodeValue(Node<T>* mEnd);
+		T GetMinNodeValue(Node<T>* mHead);
+		void CopyList(Node<T>* srcHead, Node<T>* srcEnd, Node<T>* destHead, Node<T>* destEnd);
+	};
+
+	template <typename T>
+	SmartQueue<T>::SmartQueue()
+		: mSum(0)
+		, mSquareSum(0)
+		, mCount(0)
+	{
+		mHead = new Node<T>();
+		mEnd = new Node<T>();
+
+		InitList(mHead, mEnd);
+	}
+
+	template <typename T>
+	SmartQueue<T>::SmartQueue(const SmartQueue& other)
+		: mSum (other.mSum)
+		, mCount (other.mCount)
+		, mSquareSum (other.mSquareSum)
+		, mQueue(other.mQueue)
+	{
+		mHead = new Node<T>();
+		mEnd = new Node<T>();
+		CopyList(other.mHead, other.mEnd, mHead, mEnd);
+	}
+
+	template <typename T>
+	SmartQueue<T>& SmartQueue<T>::operator=(const SmartQueue<T>& other)
+	{
+		if (this == &other)
+		{
+			return *this;
+		}
+
+		Destroy(mHead);
+
+		mSum = other.mSum;
+		mCount = other.mCount;
+		mSquareSum = other.mSquareSum;
+		mQueue = other.mQueue;
+
+		mHead = new Node<T>();
+		mEnd = new Node<T>();
+
+		CopyList(other.mHead, other.mEnd, mHead, mEnd);
+	}
+
+	template <typename T>
+	SmartQueue<T>::~SmartQueue()
+	{
+		Destroy(mHead);
+	}
+
+	template <typename T>
+	void SmartQueue<T>::Enqueue(T number)
+	{
+		++mCount;
+		mSum += number;
+		mSquareSum += (number * number);
+		mQueue.push(number);
+		
+		InsertSorted(mHead, mEnd, number);
+	}
+
+	template <typename T>
+	T SmartQueue<T>::Peek()
+	{
+		return mQueue.front();
+	}
+
+	template <typename T>
+	T SmartQueue<T>::Dequeue()
+	{
+		--mCount;
+		T poped = mQueue.front();
+		mSum -= poped;
+		mSquareSum -= (poped * poped);
+		mQueue.pop();
+		RemoveNode(mHead, mEnd, poped);
+
+		return poped;
+	}
+
+	template <typename T>
+	T SmartQueue<T>::GetMax()
+	{
+		return mCount == 0 ? numeric_limits<T>::lowest() : GetMaxNodeValue(mEnd);
+	}
+
+	template <typename T>
+	T SmartQueue<T>::GetMin()
+	{
+		return mCount == 0 ? numeric_limits<T>::max() : GetMinNodeValue(mHead);
+	}
+
+	template <typename T>
+	double SmartQueue<T>::GetAverage()
+	{
+		double denominator = static_cast<double>(mCount);
+
+		return mSum / denominator;
+	}
+
+	template <typename T>
+	T SmartQueue<T>::GetSum()
+	{
+		return mSum;
+	}
+
+	template <typename T>
+	double SmartQueue<T>::GetVariance()
+	{
+		double denominator = static_cast<double>(mCount);
+		double average = static_cast<double>(GetAverage());
+		return (mSquareSum / denominator) - average * average;
+	}
+
+	template <typename T>
+	double SmartQueue<T>::GetStandardDeviation()
+	{
+		return sqrt(GetVariance());
+	}
+
+	template <typename T>
+	unsigned int SmartQueue<T>::GetCount()
+	{
+		return mCount;
+	}
+
+	// private ÇÔ¼öµé. Linked List
+
+	template <typename T>
+	void SmartQueue<T>::InitList(Node<T>* mHead, Node<T>* mEnd)
+	{
+		mHead->Prev = nullptr;
+		mHead->Value = numeric_limits<T>::lowest();
+		mHead->Next = mEnd;
+
+		mEnd->Prev = mHead;
+		mEnd->Value = numeric_limits<T>::max();
+		mEnd->Next = nullptr;
+	}
+
+	template <typename T>
+	void SmartQueue<T>::InsertSorted(Node<T>* mHead, Node<T>* mEnd, T value)
+	{
+		Node<T>* newNode = new Node<T>();
+		newNode->Value = value;
+		Node<T>* p = mHead->Next;
+
+		while (p != mEnd)
+		{
+			if (p->Value >= value)
+			{
+				break;
+			}
+			p = p->Next;
+		}
+
+		newNode->Prev = p->Prev;
+		newNode->Next = p;
+		p->Prev->Next = newNode;
+		p->Prev = newNode;
+	}
+
+	template <typename T>
+	void SmartQueue<T>::Destroy(Node<T>* mHead)
+	{
+		Node<T>* p = mHead->Next;
+		while (p != nullptr)
+		{
+			delete p->Prev;
+			p = p->Next;
+		}
+	}
+
+	template <typename T>
+	void SmartQueue<T>::RemoveNode(Node<T>* mHead, Node<T>* mEnd, T value)
+	{
+		Node<T>* p = mHead->Next;
+
+		while (p != mEnd)
+		{
+			if (p->Value == value)
+			{
+				p->Prev->Next = p->Next;
+				p->Next->Prev = p->Prev;
+				delete p;
+				break;
+			}
+			p = p->Next;
+		}
+	}
+
+	template <typename T>
+	T SmartQueue<T>::GetMaxNodeValue(Node<T>* mEnd)
+	{
+		return mEnd->Prev->Value;
+	}
+
+	template <typename T>
+	T SmartQueue<T>::GetMinNodeValue(Node<T>* mHead)
+	{
+		return mHead->Next->Value;
+	}
+
+	template <typename T>
+	void SmartQueue<T>::CopyList(Node<T>* srcHead, Node<T>* srcEnd, Node<T>* destHead, Node<T>* destEnd)
+	{
+		InitList(destHead, destEnd);
+
+		T value;
+		Node<T>* p = srcHead->Next;
+
+		Node<T>* destH = destHead;
+		Node<T>* destE = destEnd;
+
+		while (p != srcEnd)
+		{
+			value = p->Value;
+
+			Node<T>* newNode = new Node<T>();
+			newNode->Value = value;
+
+			destH->Next = newNode;
+			newNode->Prev = destH;
+			newNode->Next = destE;
+			destE->Prev = newNode;
+
+			p = p->Next;
+
+			destH = destH->Next;
+		}
+	}
+}

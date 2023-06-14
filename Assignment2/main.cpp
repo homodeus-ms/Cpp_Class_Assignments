@@ -133,6 +133,16 @@ void TestMachina()
 
 int main()
 {
+	Person* a = new Person("aaa", 50);
+	Person* b = new Person("bbb", 100);
+	Person* c = new Person("ccc", 150);
+
+	Airplane p1(5);
+	p1.AddPassenger(a);
+	p1.AddPassenger(b);
+	Airplane p2(p1);
+
+#if 0
 	Person* p = new Person("Bob", 85);
 
 	assert(p->GetName() == std::string("Bob"));
@@ -190,7 +200,7 @@ int main()
 	bAdded = sedan2->AddTrailer(new Trailer(60));
 	assert(!bAdded);
 
-#if 1
+
 	bAdded = deusExMachina1->AddVehicle(airplane);
 	assert(bAdded);
 
