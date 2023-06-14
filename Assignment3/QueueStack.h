@@ -2,7 +2,8 @@
 
 #include <cassert>
 #include <queue>
-#include <stack>
+#include "SmartStack.h"
+#include "SmartQueue.h"
 
 namespace assignment3
 {
