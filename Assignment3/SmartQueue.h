@@ -7,6 +7,8 @@
 
 #include "Node.h"
 
+using namespace std;
+
 namespace assignment3
 {
 	template <typename T>
