@@ -35,7 +35,7 @@ namespace assignment3
 		Node<T>* mEnd;
 		
 		T mSum;
-		T mSquareSum;
+		double mSquareSum;
 		unsigned int mCount;
 
 		void initList(Node<T>* mHead, Node<T>* mEnd);
@@ -90,6 +90,8 @@ namespace assignment3
 		mEnd = new Node<T>();
 
 		copyList(other.mHead, other.mEnd, mHead, mEnd);
+
+		return *this;
 	}
 
 	template <typename T>
@@ -103,7 +105,7 @@ namespace assignment3
 	{
 		++mCount;
 		mSum += number;
-		mSquareSum += (number * number);
+		mSquareSum += pow(number, 2);
 		mQueue.push(number);
 		
 		insertSorted(mHead, mEnd, number);
@@ -121,7 +123,7 @@ namespace assignment3
 		--mCount;
 		T poped = mQueue.front();
 		mSum -= poped;
-		mSquareSum -= (poped * poped);
+		mSquareSum -= pow(poped, 2);
 		mQueue.pop();
 		removeNode(mHead, mEnd, poped);
 
@@ -157,9 +159,8 @@ namespace assignment3
 	template <typename T>
 	double SmartQueue<T>::GetVariance()
 	{
-		double denominator = static_cast<double>(mCount);
-		double average = static_cast<double>(GetAverage());
-		return (mSquareSum / denominator) - average * average;
+		double average = GetAverage();
+		return (mSquareSum / mCount) - average * average;
 	}
 
 	template <typename T>

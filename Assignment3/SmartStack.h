@@ -21,6 +21,7 @@ namespace assignment3
 		double GetAverage();
 		T GetSum();
 		double GetVariance();
+		double GetVariance2();
 		double GetStandardDeviation();
 		unsigned int GetCount();
 
@@ -31,7 +32,7 @@ namespace assignment3
 		T mMax;
 		T mMin;
 		T mSum;
-		T mSquareSum;
+		double mSquareSum;
 		unsigned int mCount;
 	};
 
@@ -52,7 +53,7 @@ namespace assignment3
 	{
 		++mCount;
 		mSum += number;
-		mSquareSum += (number * number);
+		mSquareSum += pow(number, 2);
 		mStack.push(number);
 		mMax = mMax >= number ? mMax : number;
 		mMin = mMin >= number ? number : mMin;
@@ -68,7 +69,7 @@ namespace assignment3
 		T poped = mStack.top();
 		mStack.pop();
 		mSum -= poped;
-		mSquareSum -= (poped * poped);
+		mSquareSum -= pow(poped, 2);
 		mMaxs.pop();
 		mMins.pop();
 
@@ -110,9 +111,8 @@ namespace assignment3
 	template<typename T>
 	double SmartStack<T>::GetVariance()
 	{
-		double denominator = static_cast<double>(mCount);
-		double average = static_cast<double>(GetAverage());
-		return (mSquareSum / denominator) - average * average;
+		double average = GetAverage();
+		return (mSquareSum / mCount) - average * average;
 	}
 
 	template<typename T>
@@ -126,4 +126,25 @@ namespace assignment3
 	{
 		return mCount;
 	}
+
+	
+	template <typename T>
+	double SmartStack<T>::GetVariance2()
+	{
+		double average = GetAverage();
+		double sum = 0;
+		stack<T> keep;
+		while (mStack.size() != 0)
+		{
+			double top = mStack.top();
+			keep.push(mStack.top());
+			sum += (top - average) * (top - average);
+			mStack.pop();
+		}
+
+		swap(keep, mStack);
+
+		return sum / static_cast<double>(mCount);
+	}
+	
 }
