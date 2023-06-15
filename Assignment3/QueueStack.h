@@ -97,20 +97,21 @@ namespace assignment3
 			return numeric_limits<T>::lowest();
 		}
 
-		SmartQueue<T> max;
+		T max = mQueue.front().GetMax();
 
-		while (mQueue.size() != 0)
+		for (int i = 0; i < mStackCount; ++i)
 		{
-			mKeepQ.push(mQueue.front());
-			max.Enqueue(mQueue.front().GetMax());
+			T temp = mQueue.front().GetMax();
+			mQueue.push(mQueue.front());
 			mQueue.pop();
+
+			if (max < temp)
+			{
+				max = temp;
+			}
 		}
 
-		T result = max.GetMax();
-
-		swap(mKeepQ, mQueue);
-
-		return result;
+		return max;
 	}
 
 	template <typename T>
@@ -121,20 +122,21 @@ namespace assignment3
 			return numeric_limits<T>::max();
 		}
 
-		SmartQueue<T> min;
+		T min = mQueue.front().GetMin();
 
-		while (mQueue.size() != 0)
+		for (int i = 0; i < mStackCount; ++i)
 		{
-			mKeepQ.push(mQueue.front());
-			min.Enqueue(mQueue.front().GetMin());
+			T temp = mQueue.front().GetMin();
+			mQueue.push(mQueue.front());
 			mQueue.pop();
+
+			if (min > temp)
+			{
+				min = temp;
+			}
 		}
 
-		T result = min.GetMin();
-
-		swap(mKeepQ, mQueue);
-
-		return result;
+		return min;
 	}
 
 	template <typename T>

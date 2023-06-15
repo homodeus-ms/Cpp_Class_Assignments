@@ -21,14 +21,12 @@ namespace assignment3
 		double GetAverage();
 		T GetSum();
 		double GetVariance();
-		double GetVariance2();
 		double GetStandardDeviation();
 		unsigned int GetCount();
 
 	private:
 		stack<T> mStack;
-		stack<T> mMaxs;
-		stack<T> mMins;
+		
 		T mMax;
 		T mMin;
 		T mSum;
@@ -44,12 +42,10 @@ namespace assignment3
 		, mSquareSum(0)
 		, mCount(0)
 	{
-		mMaxs.push(mMax);
-		mMins.push(mMin);
 	}
 
 	template<typename T>
-	void SmartStack<T>::Push(T number)
+	void SmartStack<T>::Push(T number) // number, 이번회차까지 Max값, 이번회차까지 Min값 순서로 저장
 	{
 		++mCount;
 		mSum += number;
@@ -58,20 +54,20 @@ namespace assignment3
 		mMax = mMax >= number ? mMax : number;
 		mMin = mMin >= number ? number : mMin;
 
-		mMaxs.push(mMax);
-		mMins.push(mMin);
+		mStack.push(mMax);
+		mStack.push(mMin);
 	}
 
 	template<typename T>
 	T SmartStack<T>::Pop()
 	{
 		--mCount;
+		mStack.pop();
+		mStack.pop();
 		T poped = mStack.top();
 		mStack.pop();
 		mSum -= poped;
 		mSquareSum -= pow(poped, 2);
-		mMaxs.pop();
-		mMins.pop();
 
 		return poped;
 	}
@@ -79,7 +75,13 @@ namespace assignment3
 	template<typename T>
 	T SmartStack<T>::Peek()
 	{
+		T temp1 = mStack.top();
+		mStack.pop();
+		T temp2 = mStack.top();
+		mStack.pop();
 		T peeked = mStack.top();
+		mStack.push(temp2);
+		mStack.push(temp1);
 		
 		return peeked;
 	}
@@ -87,13 +89,28 @@ namespace assignment3
 	template<typename T>
 	T SmartStack<T>::GetMax()
 	{
-		return mMaxs.top();
+		if (mCount == 0)
+		{
+			return numeric_limits<T>::lowest();
+		}
+
+		T temp = mStack.top();
+		mStack.pop();
+		T result = mStack.top();
+		mStack.push(temp);
+
+		return result;
 	}
 
 	template<typename T>
 	T SmartStack<T>::GetMin()
 	{
-		return mMins.top();
+		if (mCount == 0)
+		{
+			return numeric_limits<T>::max();
+		}
+
+		return mStack.top();
 	}
 	
 	template<typename T>
@@ -126,25 +143,4 @@ namespace assignment3
 	{
 		return mCount;
 	}
-
-	
-	template <typename T>
-	double SmartStack<T>::GetVariance2()
-	{
-		double average = GetAverage();
-		double sum = 0;
-		stack<T> keep;
-		while (mStack.size() != 0)
-		{
-			double top = mStack.top();
-			keep.push(mStack.top());
-			sum += (top - average) * (top - average);
-			mStack.pop();
-		}
-
-		swap(keep, mStack);
-
-		return sum / static_cast<double>(mCount);
-	}
-	
 }

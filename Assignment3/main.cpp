@@ -610,15 +610,10 @@ void TestMinMaxWhenEmpty()
 
 int main()
 {
-    SmartStack<short> ss;
-    
-    ss.Push((short)1000000);
-    ss.Push((short)2000000);
-    ss.Push((short)3000000);
-
-    cout << "Average: " << ss.GetAverage() << " / " << "Variance1: " << ss.GetVariance() << endl;
-
-    cout << "Average: " << ss.GetAverage() << " / " << "Variance2: " << ss.GetVariance2() << endl;
+    TestSmartQueue();
+    TestSmartStack();
+    TestMinMaxWhenEmpty();
+    TestQueueStack();
 #if 0
     QueueStack<int> qs(2);
 
