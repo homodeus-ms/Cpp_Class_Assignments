@@ -78,7 +78,7 @@ namespace assignment3
 
 		T max = mQueue.front();
 
-		for (int i = 0; i < mCount; ++i)
+		for (unsigned int i = 0; i < mCount; ++i)
 		{
 			T temp = mQueue.front();
 			mQueue.push(temp);
@@ -103,7 +103,7 @@ namespace assignment3
 
 		T min = mQueue.front();
 
-		for (int i = 0; i < mCount; ++i)
+		for (unsigned int i = 0; i < mCount; ++i)
 		{
 			T temp = mQueue.front();
 			mQueue.push(temp);

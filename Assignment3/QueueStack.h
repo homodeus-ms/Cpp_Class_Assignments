@@ -97,7 +97,7 @@ namespace assignment3
 
 		T max = mQueue.front().GetMax();
 
-		for (int i = 0; i < mStackCount; ++i)
+		for (unsigned int i = 0; i < mStackCount; ++i)
 		{
 			T temp = mQueue.front().GetMax();
 			mQueue.push(mQueue.front());
@@ -122,7 +122,7 @@ namespace assignment3
 
 		T min = mQueue.front().GetMin();
 
-		for (int i = 0; i < mStackCount; ++i)
+		for (unsigned int i = 0; i < mStackCount; ++i)
 		{
 			T temp = mQueue.front().GetMin();
 			mQueue.push(mQueue.front());
