@@ -29,8 +29,6 @@ namespace assignment3
 		T mSum;
 
 		queue<SmartStack<T>> mQueue;
-		queue<SmartStack<T>> mKeepQ;
-
 	};
 
 	template <typename T>
