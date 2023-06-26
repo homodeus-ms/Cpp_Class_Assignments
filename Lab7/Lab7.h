@@ -14,19 +14,19 @@ namespace lab7
 	{
 		std::map<K, V> m;
 
-		typename vector<K>::const_iterator k_Iter = keys.begin();
-		typename vector<V>::const_iterator v_Iter = values.begin();
+		typename vector<K>::const_iterator kIter = keys.begin();
+		typename vector<V>::const_iterator vIter = values.begin();
 
-		while (k_Iter != keys.end() && v_Iter != values.end())
+		while (kIter != keys.end() && vIter != values.end())
 		{
-			if (m.find(*k_Iter) == m.end())
+			if (m.find(*kIter) == m.end())
 			{
-				pair<K, V> p(*k_Iter++, *v_Iter++);
+				pair<K, V> p(*kIter++, *vIter++);
 				m.insert(p);
 			}
 			else
 			{
-				k_Iter++;
+				kIter++;
 			}
 		}
 
@@ -80,12 +80,26 @@ namespace lab7
 	}
 
 	template <typename T>
-	inline void InsertVectorToSet(set<T>& tempSet, const vector<T>& v)
+	inline void CombineVectors(vector<T>& combined, const std::vector<T>& v)
 	{
-		typename vector<T>::const_iterator iter;
-		for (iter = v.begin(); iter != v.end(); ++iter)
+		typename vector<T>::const_iterator it;
+
+		for (it = v.begin(); it != v.end(); ++it)
 		{
-			tempSet.insert(*iter);
+			T temp = *it;
+
+			for (size_t i = 0; i < combined.size(); ++i)
+			{
+				if (combined[i] == temp)
+				{
+					goto nextTurn;
+				}
+			}
+
+			combined.push_back(temp);
+
+		nextTurn:
+			continue;
 		}
 	}
 
@@ -93,16 +107,11 @@ namespace lab7
 	std::vector<T> operator+(const std::vector<T>& v1, const std::vector<T>& v2)
 	{
 		std::vector<T> combined;
+		
 		combined.reserve(v1.size() + v2.size());
-		set<T> tempSet;
 
-		InsertVectorToSet(tempSet, v1);
-		InsertVectorToSet(tempSet, v2);
-
-		for (typename set<T>::iterator iter = tempSet.begin(); iter != tempSet.end(); ++iter)
-		{
-			combined.push_back(*iter);
-		}
+		CombineVectors(combined, v1);
+		CombineVectors(combined, v2);
 
 		return combined;
 	}

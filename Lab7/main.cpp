@@ -6,6 +6,14 @@ using namespace lab7;
 
 int main()
 {
+	vector<int> v1 = { 3, 4, 1, 5 };
+	vector<int> v2 = { 11, 14, 1, 5, 12 };
+
+	vector<int> v3 = v1 + v2;
+
+	cout << v3 << endl;
+
+#if 0
 	std::vector<int> v1;
 	v1.push_back(1);
 	v1.push_back(2);
@@ -112,6 +120,10 @@ int main()
 
 	std::cout << v1 << std::endl;
 	std::cout << m1 << std::endl;
+
+#endif
+
+	cout << "NO Assert!" << endl;
 
 	return 0;
 }
