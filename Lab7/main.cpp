@@ -6,12 +6,12 @@ using namespace lab7;
 
 int main()
 {
-	vector<int> v1 = { 3, 4, 1, 5 };
-	vector<int> v2 = { 11, 14, 1, 5, 12 };
+	vector<char> v1 = { 'a','b','a','c' };
+	vector<int> v2 = { 1,2,3,4 };
 
-	vector<int> v3 = v1 + v2;
+	map<char, int> m = ConvertVectorsToMap(v1, v2);
 
-	cout << v3 << endl;
+	cout << m << endl;
 
 #if 0
 	std::vector<int> v1;
