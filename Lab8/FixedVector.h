@@ -8,6 +8,7 @@ namespace lab8
 	{
 	public:
 		FixedVector();
+		~FixedVector() = default;
 		bool Add(T& value);
 		bool Remove(T& value);
 		const T& Get(unsigned int index);
@@ -17,7 +18,8 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		T mArray[N];
+		enum { MAX = N };
+		T mArray[MAX];
 		size_t mSize;
 	};
 
@@ -30,7 +32,7 @@ namespace lab8
 	template <typename T, size_t N>
 	bool FixedVector<T, N>::Add(T& value)
 	{
-		if (mSize >= N)
+		if (mSize >= MAX)
 		{
 			return false;
 		}
@@ -94,10 +96,8 @@ namespace lab8
 	template <typename T, size_t N>
 	size_t FixedVector<T, N>::GetCapacity() const
 	{
-		return N;
+		return MAX;
 	}
-
-	
 }
 
 
