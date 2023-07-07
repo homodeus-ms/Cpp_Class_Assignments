@@ -3,6 +3,10 @@
 #include <cstdint>
 #include "FixedVector.h"
 
+#define TYPE_CAPACITY (32)
+#define idx (mSize / TYPE_CAPACITY)
+#define shiftCount (mSize % TYPE_CAPACITY)
+
 namespace lab8
 {
 	template <size_t N>
@@ -19,27 +23,31 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		unsigned int mBools;
-		uint8_t mSize;
+		enum { MAX = N - 1 };
+		size_t mSize;
+		unsigned int mBools[MAX / TYPE_CAPACITY + 1];
 	};
 
 	template <size_t N>
 	FixedVector<bool, N>::FixedVector()
 		: mSize(0)
-		, mBools(0)
 	{
+		for (int i = 0; i < MAX / TYPE_CAPACITY + 1; ++i)
+		{
+			mBools[i] = 0;
+		}
 	}
 	
 	template <size_t N>
 	bool FixedVector<bool, N>::Add(bool b)
 	{
-		if (mSize >= N)
+		if (mSize > MAX)
 		{
 			return false;
 		}
 		
-		mBools = mBools ^ (b << mSize);
-
+		mBools[idx] ^= (b << shiftCount);
+		
 		++mSize;
 
 		return true;
@@ -57,8 +65,8 @@ namespace lab8
 
 		int mask = 1 << index;
 
-		mBools ^= mask;
-		mBools >>= 1;
+		mBools[index / TYPE_CAPACITY] ^= mask;
+		mBools[index / TYPE_CAPACITY] >>= 1;
 		--mSize;
 
 		return true;
@@ -67,8 +75,9 @@ namespace lab8
 	template <size_t N>
 	bool FixedVector<bool, N>::Get(unsigned int index) const
 	{
+		index %= TYPE_CAPACITY;
 		int mask = 1 << index;
-		mask &= mBools;
+		mask &= mBools[idx];
 
 		return mask == 0 ? false : true;
 	}
@@ -83,23 +92,42 @@ namespace lab8
 	int FixedVector<bool, N>::GetIndex(bool b) const
 	{
 		int mask;
+
+		int i;
+		
 		if (b == false)
 		{
-			mask = ~mBools & (mBools + 1);
-			if (mask >= pow(2, mSize))
+			for (i = 0; i < MAX / TYPE_CAPACITY + 1; ++i)
 			{
-				return -1;
+				mask = ~mBools[i] & (mBools[i] + 1);
+
+				if (mask >= pow(2, mSize))
+				{
+					continue;
+				}
+				
+				goto getIndex;
 			}
+
+			return -1;
 		}
 		else
 		{
-			if (mBools == 0)
+			for (i = 0; i < MAX / TYPE_CAPACITY + 1; ++i)
 			{
-				return -1;
+				if (mBools[i] == 0)
+				{
+					continue;
+				}
+
+				mask = mBools[i] & (-1 * mBools[i]);
+				goto getIndex;
 			}
-			mask = mBools & (-1 * mBools);
+			
+			return -1;
 		}
 
+getIndex:
 		int count = -1;
 
 		while (mask != 0)
@@ -108,7 +136,7 @@ namespace lab8
 			++count;
 		}
 
-		return count;
+		return count + (i * TYPE_CAPACITY);
 	}
 
 	template <size_t N>
@@ -120,6 +148,6 @@ namespace lab8
 	template <size_t N>
 	size_t FixedVector<bool, N>::GetCapacity() const
 	{
-		return N;
+		return MAX + 1;
 	}
 }
