@@ -1,5 +1,4 @@
-#include <cassert>
-#include <iostream>
+﻿#include <cassert>
 
 #include "FixedVector.h"
 #include "FixedBoolVector.h"
@@ -7,8 +6,8 @@
 using namespace lab8;
 using namespace std;
 
-//template <bool, size_t N>
-void Print(FixedVector<bool, 50>& f1)
+/*
+void Print(FixedVector<bool, 64>& f1)
 {
 	cout << boolalpha;
 	cout << "Capacity: " << f1.GetCapacity() << endl;
@@ -16,28 +15,19 @@ void Print(FixedVector<bool, 50>& f1)
 	cout << "Get3: " << f1.Get(3) << endl;
 	cout << "First false index: " << f1.GetIndex(false) << endl;
 	cout << "First true index: " << f1.GetIndex(true) << endl;
+
+
+
+	cout << showbase << hex << f1.mBools[0] << endl;
+	cout << hex << f1.mBools[1] << endl;
 }
+*/
 
 int main()
 {
-	int a = 0xFFFFFFFF;
-	FixedVector<bool, 50> f1;
-	f1.Add(false);
-	for (int i = 0; i < 31; ++i)
-	{
-		f1.Add(true);
-	}
-	f1.Add(false);
-	f1.Add(false);
-	f1.Add(true);
+	cout << "what the" << endl;
+	
 
-	f1.Remove(false);
-	f1.Remove(false);
-	f1.Remove(false);
-	//f1.Add(false);
-	//f1.Add(true);
-
-	Print(f1);
 
 #if 0
 	int i1 = 23;

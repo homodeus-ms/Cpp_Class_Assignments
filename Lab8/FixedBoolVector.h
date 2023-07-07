@@ -3,7 +3,7 @@
 #include <cstdint>
 #include "FixedVector.h"
 
-#define TYPE_CAPACITY (32)
+//#define TYPE_CAPACITY (32)
 #define idx (mSize / TYPE_CAPACITY)
 #define shiftCount (mSize % TYPE_CAPACITY)
 
@@ -22,8 +22,12 @@ namespace lab8
 		size_t GetSize() const;
 		size_t GetCapacity() const;
 
-	private:
-		enum { MAX = N - 1 };
+	//private:
+		enum 
+		{ 
+			MAX = N - 1,
+			TYPE_CAPACITY = 32
+		};
 		size_t mSize;
 		unsigned int mBools[MAX / TYPE_CAPACITY + 1];
 	};
@@ -46,7 +50,7 @@ namespace lab8
 			return false;
 		}
 		
-		mBools[idx] ^= (b << shiftCount);
+		mBools[idx] |= (b << shiftCount);
 		
 		++mSize;
 
@@ -68,7 +72,7 @@ namespace lab8
 		mBools[index / TYPE_CAPACITY] ^= mask;
 		mBools[index / TYPE_CAPACITY] >>= 1;
 
-		int lastIndex = mSize / TYPE_CAPACITY;
+		int lastIndex = (mSize - 1) / TYPE_CAPACITY;
 
 		while (lastIndex != 0)
 		{
@@ -108,7 +112,7 @@ namespace lab8
 	{
 		int mask;
 
-		int i;
+		size_t i;
 		
 		if (b == false)
 		{
