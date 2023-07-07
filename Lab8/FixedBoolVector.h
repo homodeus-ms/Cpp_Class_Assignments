@@ -19,8 +19,8 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		uint8_t mBools;
-		unsigned int mSize;
+		unsigned int mBools;
+		uint8_t mSize;
 	};
 
 	template <size_t N>

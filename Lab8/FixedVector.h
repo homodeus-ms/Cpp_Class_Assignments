@@ -4,11 +4,11 @@
 namespace lab8
 {
 	template <typename T, size_t N>
-	class FixedVector final
+	class FixedVector
 	{
 	public:
 		FixedVector();
-		~FixedVector() = default;
+		virtual ~FixedVector() = default;
 		bool Add(T& value);
 		bool Remove(T& value);
 		const T& Get(unsigned int index);
