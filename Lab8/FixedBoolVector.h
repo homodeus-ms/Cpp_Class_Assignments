@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cstdint>
 #include "FixedVector.h"
 
 namespace lab8
@@ -18,7 +19,7 @@ namespace lab8
 		size_t GetCapacity() const;
 
 	private:
-		unsigned int mBools;
+		uint8_t mBools;
 		unsigned int mSize;
 	};
 
