@@ -67,6 +67,21 @@ namespace lab8
 
 		mBools[index / TYPE_CAPACITY] ^= mask;
 		mBools[index / TYPE_CAPACITY] >>= 1;
+
+		int lastIndex = mSize / TYPE_CAPACITY;
+
+		while (lastIndex != 0)
+		{
+			int8_t carry = mBools[lastIndex] & 0x1;
+			mBools[lastIndex] >>= 1;
+			if (carry == 0x1)
+			{
+				mBools[lastIndex - 1] |= 0x80000000;
+			}
+
+			--lastIndex;
+		}
+
 		--mSize;
 
 		return true;
@@ -77,7 +92,7 @@ namespace lab8
 	{
 		index %= TYPE_CAPACITY;
 		int mask = 1 << index;
-		mask &= mBools[idx];
+		mask &= mBools[index / TYPE_CAPACITY];
 
 		return mask == 0 ? false : true;
 	}
@@ -97,14 +112,20 @@ namespace lab8
 		
 		if (b == false)
 		{
-			for (i = 0; i < MAX / TYPE_CAPACITY + 1; ++i)
+			for (i = 0; i < (mSize - 1) / TYPE_CAPACITY + 1; ++i)
 			{
+				if (mBools[i] == UINT_MAX)
+				{
+					continue;
+				}
+
 				mask = ~mBools[i] & (mBools[i] + 1);
 
 				if (mask >= pow(2, mSize))
 				{
 					continue;
 				}
+				
 				
 				goto getIndex;
 			}
@@ -113,7 +134,7 @@ namespace lab8
 		}
 		else
 		{
-			for (i = 0; i < MAX / TYPE_CAPACITY + 1; ++i)
+			for (i = 0; i < (mSize - 1) / TYPE_CAPACITY + 1; ++i)
 			{
 				if (mBools[i] == 0)
 				{
@@ -127,8 +148,13 @@ namespace lab8
 			return -1;
 		}
 
-getIndex:
+	getIndex:
 		int count = -1;
+
+		if (mask == 0x80000000)
+		{
+			return 31 + (i * TYPE_CAPACITY);
+		}
 
 		while (mask != 0)
 		{

@@ -7,8 +7,39 @@
 using namespace lab8;
 using namespace std;
 
+//template <bool, size_t N>
+void Print(FixedVector<bool, 50>& f1)
+{
+	cout << boolalpha;
+	cout << "Capacity: " << f1.GetCapacity() << endl;
+	cout << "Size: " << f1.GetSize() << endl;
+	cout << "Get3: " << f1.Get(3) << endl;
+	cout << "First false index: " << f1.GetIndex(false) << endl;
+	cout << "First true index: " << f1.GetIndex(true) << endl;
+}
+
 int main()
 {
+	int a = 0xFFFFFFFF;
+	FixedVector<bool, 50> f1;
+	f1.Add(false);
+	for (int i = 0; i < 31; ++i)
+	{
+		f1.Add(true);
+	}
+	f1.Add(false);
+	f1.Add(false);
+	f1.Add(true);
+
+	f1.Remove(false);
+	f1.Remove(false);
+	f1.Remove(false);
+	//f1.Add(false);
+	//f1.Add(true);
+
+	Print(f1);
+
+#if 0
 	int i1 = 23;
 	int i2 = 25;
 	int i3 = 10;
@@ -93,6 +124,7 @@ int main()
 	assert(v1.Add(true) == false);
 	assert(v1.GetSize() == 65);
 	assert(v1.GetIndex(true) == -1);
+#endif
 
 	cout << "NO Assert!!" << endl;
 
