@@ -22,21 +22,21 @@ namespace lab8
 		size_t GetSize() const;
 		size_t GetCapacity() const;
 
-	//private:
+	private:
 		enum 
 		{ 
-			MAX = N - 1,
+			MAX = N,
 			TYPE_CAPACITY = 32
 		};
 		size_t mSize;
-		unsigned int mBools[MAX / TYPE_CAPACITY + 1];
+		unsigned int mBools[(MAX - 1) / TYPE_CAPACITY + 1];
 	};
 
 	template <size_t N>
 	FixedVector<bool, N>::FixedVector()
 		: mSize(0)
 	{
-		for (int i = 0; i < MAX / TYPE_CAPACITY + 1; ++i)
+		for (int i = 0; i < (MAX - 1) / TYPE_CAPACITY + 1; ++i)
 		{
 			mBools[i] = 0;
 		}
@@ -45,7 +45,7 @@ namespace lab8
 	template <size_t N>
 	bool FixedVector<bool, N>::Add(bool b)
 	{
-		if (mSize > MAX)
+		if (mSize >= MAX)
 		{
 			return false;
 		}
@@ -178,6 +178,6 @@ namespace lab8
 	template <size_t N>
 	size_t FixedVector<bool, N>::GetCapacity() const
 	{
-		return MAX + 1;
+		return MAX;
 	}
 }
