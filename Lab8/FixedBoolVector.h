@@ -60,6 +60,11 @@ namespace lab8
 	template <size_t N>
 	bool FixedVector<bool, N>::Remove(bool b)
 	{
+		if (mSize == 0)
+		{
+			return false;
+		}
+
 		int index = GetIndex(b);
 
 		if (index == -1)
@@ -94,8 +99,8 @@ namespace lab8
 	template <size_t N>
 	bool FixedVector<bool, N>::Get(unsigned int index) const
 	{
-		index %= TYPE_CAPACITY;
-		int mask = 1 << index;
+		unsigned int boolIndex = index % TYPE_CAPACITY;
+		int mask = 1 << boolIndex;
 		mask &= mBools[index / TYPE_CAPACITY];
 
 		return mask == 0 ? false : true;
@@ -110,6 +115,11 @@ namespace lab8
 	template <size_t N>
 	int FixedVector<bool, N>::GetIndex(bool b) const
 	{
+		if (mSize == 0)
+		{
+			return -1;
+		}
+
 		int mask;
 
 		size_t i;
