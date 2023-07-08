@@ -65,30 +65,41 @@ namespace lab8
 			return false;
 		}
 
-		int index = GetIndex(b);
+		int boolIndex = GetIndex(b);
 
-		if (index == -1)
+		if (boolIndex == -1)
 		{
 			return false;
 		}
 
-		int mask = 1 << index;
-
-		mBools[index / TYPE_CAPACITY] ^= mask;
-		mBools[index / TYPE_CAPACITY] >>= 1;
-
+		int mask = 1 << boolIndex;
+		int currIndex = boolIndex / TYPE_CAPACITY;
 		int lastIndex = (mSize - 1) / TYPE_CAPACITY;
 
-		while (lastIndex != 0)
+		unsigned int lowBits = mBools[currIndex] % mask;
+		unsigned int highBits = mBools[currIndex] ^ lowBits;
+		highBits >>= 1;
+		mBools[currIndex] = highBits | lowBits;
+
+		if (currIndex < lastIndex)
 		{
-			int8_t carry = mBools[lastIndex] & 0x1;
-			mBools[lastIndex] >>= 1;
+			int8_t carry = mBools[currIndex + 1] & 0x1;
 			if (carry == 0x1)
 			{
-				mBools[lastIndex - 1] |= 0x80000000;
+				mBools[currIndex++] |= 0x80000000;
 			}
 
-			--lastIndex;
+			for (int i = currIndex; i < lastIndex; ++i)
+			{
+				carry = mBools[i + 1] & 0x1;
+				mBools[i] >>= 1;
+
+				if (carry == 0x1)
+				{
+					mBools[i] |= 0x80000000;
+				}
+			}
+			mBools[lastIndex] >>= 1;
 		}
 
 		--mSize;
@@ -119,8 +130,12 @@ namespace lab8
 		{
 			return -1;
 		}
+		if ((mBools[0] & 0x1) == b)
+		{
+			return 0;
+		}
 
-		int mask;
+		unsigned int mask;
 
 		size_t i;
 		
@@ -132,10 +147,10 @@ namespace lab8
 				{
 					continue;
 				}
-
+				
 				mask = ~mBools[i] & (mBools[i] + 1);
 
-				if (mask >= pow(2, mSize))
+				if (mask >= pow(2, (mSize % TYPE_CAPACITY)))
 				{
 					continue;
 				}

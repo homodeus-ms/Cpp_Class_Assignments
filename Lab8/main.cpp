@@ -25,6 +25,22 @@ void Print(FixedVector<bool, 64>& f1)
 
 int main()
 {
+	FixedVector<bool, 65> f1;
+
+	for (size_t i = 0; i < 65; ++i)
+	{
+		f1.Add(false);
+	}
+	for (size_t i = 0; i < 65; ++i)
+	{
+		assert(f1.GetIndex(true) == -1);
+		assert(f1.GetIndex(false) == 0);
+
+		assert(f1.Remove(false));
+	}
+	
+
+
 #if 0
 	FixedVector<bool, 34> fv;
 	assert(!fv.Remove(false));
@@ -54,7 +70,7 @@ int main()
 	assert(fv.Get(31));
 	assert(fv.Get(32));
 	assert(fv.GetSize() == 33);
-#endif
+
 
 	FixedVector<bool, 64> fv2;
 
@@ -131,7 +147,7 @@ int main()
 
 	assert(fv2.GetIndex(true) == -1);
 	assert(fv2.GetIndex(false) == -1);
-
+#endif
 
 #if 0
 	int i1 = 23;
