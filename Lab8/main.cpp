@@ -209,7 +209,7 @@ int main()
 	assert(fv2.GetIndex(false) == -1);
 #endif
 
-#if 0
+#if 1
 	int i1 = 23;
 	int i2 = 25;
 	int i3 = 10;

@@ -10,10 +10,10 @@ namespace lab8
 		FixedVector();
 		virtual ~FixedVector() = default;
 		bool Add(const T& value);
-		bool Remove(T& value);
+		bool Remove(const T& value);
 		const T& Get(unsigned int index);
 		T& operator[](unsigned int index);
-		int GetIndex(T& value) const;
+		int GetIndex(const T& value) const;
 		size_t GetSize() const;
 		size_t GetCapacity() const;
 
@@ -42,7 +42,7 @@ namespace lab8
 	}
 
 	template <typename T, size_t N>
-	bool FixedVector<T, N>::Remove(T& value)
+	bool FixedVector<T, N>::Remove(const T& value)
 	{
 		int index = GetIndex(value);
 
@@ -74,7 +74,7 @@ namespace lab8
 	}
 
 	template <typename T, size_t N>
-	int FixedVector<T, N>::GetIndex(T& value) const
+	int FixedVector<T, N>::GetIndex(const T& value) const
 	{
 		for (size_t i = 0; i < mSize; ++i)
 		{
