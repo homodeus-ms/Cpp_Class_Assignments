@@ -41,7 +41,7 @@ int main()
 	
 
 
-#if 0
+#if 1
 	FixedVector<bool, 34> fv;
 	assert(!fv.Remove(false));
 	assert(!fv.Remove(true));
@@ -124,11 +124,18 @@ int main()
 			assert(!fv2.Get(i));
 		}
 	}
+	// 11111111 00000000 11111111 00000000
+	// xxxxxxxx 00000000 11111111 00000000
 
-	for (size_t i = 0; i < 32; ++i)
+	for (size_t i = 0; i < 16; ++i)
 	{
 		assert(fv2.Remove(false));
 	}
+	for (size_t i = 0; i < 16; ++i)
+	{
+		assert(fv2.Remove(false));
+	}
+
 	assert(fv2.GetCapacity() == 64);
 	assert(fv2.GetSize() == 24);
 	assert(fv2.GetIndex(true) == 0);
@@ -149,7 +156,7 @@ int main()
 	assert(fv2.GetIndex(false) == -1);
 #endif
 
-#if 0
+#if 1
 	int i1 = 23;
 	int i2 = 25;
 	int i3 = 10;

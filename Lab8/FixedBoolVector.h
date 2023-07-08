@@ -86,10 +86,10 @@ namespace lab8
 			int8_t carry = mBools[currIndex + 1] & 0x1;
 			if (carry == 0x1)
 			{
-				mBools[currIndex++] |= 0x80000000;
+				mBools[currIndex] |= 0x80000000;
 			}
 
-			for (int i = currIndex; i < lastIndex; ++i)
+			for (int i = currIndex + 1; i < lastIndex; ++i)
 			{
 				carry = mBools[i + 1] & 0x1;
 				mBools[i] >>= 1;
@@ -136,12 +136,13 @@ namespace lab8
 		}
 
 		unsigned int mask;
+		size_t lastIndex = mSize / TYPE_CAPACITY;
 
 		size_t i;
 		
 		if (b == false)
 		{
-			for (i = 0; i < (mSize - 1) / TYPE_CAPACITY + 1; ++i)
+			for (i = 0; i <= lastIndex; ++i)
 			{
 				if (mBools[i] == UINT_MAX)
 				{
@@ -150,11 +151,10 @@ namespace lab8
 				
 				mask = ~mBools[i] & (mBools[i] + 1);
 
-				if (mask >= pow(2, (mSize % TYPE_CAPACITY)))
+				if (i == lastIndex && mask >= pow(2, mSize % TYPE_CAPACITY))
 				{
-					continue;
+					break;
 				}
-				
 				
 				goto getIndex;
 			}
