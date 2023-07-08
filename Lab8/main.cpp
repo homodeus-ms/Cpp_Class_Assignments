@@ -25,6 +25,29 @@ void Print(FixedVector<bool, 64>& f1)
 
 int main()
 {
+	FixedVector<int*, 5> fv;
+	fv.Add(new int(3));
+
+	FixedVector<int*, 5> fv2 = fv;
+	assert(*fv2[0] == 3);
+	assert(&fv[0] != &fv2[0]);
+
+	fv2.Add(new int(5));
+	assert(*fv2[1] == 5);
+	//assert(*fv[1] == 0);
+	assert(fv.GetSize() == 1);
+
+	FixedVector<int*, 5> fv3;
+	fv3.Add(new int(1));
+	fv3.Add(new int(2));
+	fv3.Add(new int(3));
+
+	FixedVector<int*, 5> fv4;
+	fv4 = fv3;
+	assert(*fv3[0] == *fv4[0]);
+	assert(&fv3[0] != &fv4[0]);
+
+#if 0
 	FixedVector<bool, 100> f1;
 	
 	for (int i = 0; i < 31; ++i)
@@ -68,7 +91,7 @@ int main()
 	cout << f1.GetIndex(0) << endl;
 	cout << f1.GetIndex(1) << endl;
 
-	
+#endif
 
 
 #if 0

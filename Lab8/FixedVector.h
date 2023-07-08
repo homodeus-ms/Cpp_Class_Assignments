@@ -9,8 +9,8 @@ namespace lab8
 	public:
 		FixedVector();
 		virtual ~FixedVector() = default;
-		bool Add(T& value);
-		bool Remove(T& value);
+		bool Add(const T& value);
+		bool Remove(const T& value);
 		const T& Get(unsigned int index);
 		T& operator[](unsigned int index);
 		int GetIndex(T& value) const;
@@ -30,7 +30,7 @@ namespace lab8
 	}
 
 	template <typename T, size_t N>
-	bool FixedVector<T, N>::Add(T& value)
+	bool FixedVector<T, N>::Add(const T& value)
 	{
 		if (mSize >= MAX)
 		{
@@ -42,7 +42,7 @@ namespace lab8
 	}
 
 	template <typename T, size_t N>
-	bool FixedVector<T, N>::Remove(T& value)
+	bool FixedVector<T, N>::Remove(const T& value)
 	{
 		int index = GetIndex(value);
 
