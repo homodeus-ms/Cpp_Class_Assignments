@@ -25,23 +25,53 @@ void Print(FixedVector<bool, 64>& f1)
 
 int main()
 {
-	FixedVector<bool, 65> f1;
-
-	for (size_t i = 0; i < 65; ++i)
+	FixedVector<bool, 100> f1;
+	
+	for (int i = 0; i < 31; ++i)
 	{
 		f1.Add(false);
 	}
-	for (size_t i = 0; i < 65; ++i)
+	f1.Add(true);
+	for (int i = 0; i < 31; ++i)
 	{
-		assert(f1.GetIndex(true) == -1);
-		assert(f1.GetIndex(false) == 0);
-
-		assert(f1.Remove(false));
+		f1.Add(false);
 	}
+	f1.Add(true);
+	f1.Add(true);
+
+
+	cout << "size: " << f1.GetSize() << endl;
+	cout << f1.GetIndex(0) << endl;
+	cout << f1.GetIndex(1) << endl;
+
+	cout << "===== After Remove =====" << endl;
+
+	assert(f1.Remove(true));
+
+	cout << "size: " << f1.GetSize() << endl;
+	cout << f1.GetIndex(0) << endl;
+	cout << f1.GetIndex(1) << endl;
+
+	cout << "===== After Remove =====" << endl;
+
+	assert(f1.Remove(true));
+
+	cout << "size: " << f1.GetSize() << endl;
+	cout << f1.GetIndex(0) << endl;
+	cout << f1.GetIndex(1) << endl;
+
+	cout << "===== After Remove =====" << endl;
+
+	assert(f1.Remove(true));
+
+	cout << "size: " << f1.GetSize() << endl;
+	cout << f1.GetIndex(0) << endl;
+	cout << f1.GetIndex(1) << endl;
+
 	
 
 
-#if 1
+#if 0
 	FixedVector<bool, 34> fv;
 	assert(!fv.Remove(false));
 	assert(!fv.Remove(true));
@@ -156,7 +186,7 @@ int main()
 	assert(fv2.GetIndex(false) == -1);
 #endif
 
-#if 1
+#if 0
 	int i1 = 23;
 	int i2 = 25;
 	int i3 = 10;

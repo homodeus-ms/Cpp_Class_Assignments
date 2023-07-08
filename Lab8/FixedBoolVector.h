@@ -5,7 +5,7 @@
 
 //#define TYPE_CAPACITY (32)
 #define idx (mSize / TYPE_CAPACITY)
-#define shiftCount (mSize % TYPE_CAPACITY)
+#define boolIndex (mSize % TYPE_CAPACITY)
 
 namespace lab8
 {
@@ -30,17 +30,15 @@ namespace lab8
 		};
 		size_t mSize;
 		unsigned int mBools[(MAX - 1) / TYPE_CAPACITY + 1];
-		size_t arrIndex;
-		size_t arrLength;
+		const size_t mArrLength;
 	};
 
 	template <size_t N>
 	FixedVector<bool, N>::FixedVector()
 		: mSize(0)
-		, arrIndex(0)
+		, mArrLength(MAX / TYPE_CAPACITY + 1)
 	{
-		arrLength = MAX == 0 ? 0 : MAX / TYPE_CAPACITY + 1;
-		for (int i = 0; i < (MAX - 1) / TYPE_CAPACITY + 1; ++i)
+		for (size_t i = 0; i < mArrLength; ++i)
 		{
 			mBools[i] = 0;
 		}
@@ -54,7 +52,7 @@ namespace lab8
 			return false;
 		}
 		
-		mBools[idx] |= (b << shiftCount);
+		mBools[idx] |= (b << (mSize % TYPE_CAPACITY));
 		
 		++mSize;
 
@@ -69,19 +67,20 @@ namespace lab8
 			return false;
 		}
 
-		int boolIndex = GetIndex(b);
+		int targetIndex = GetIndex(b);
 
-		if (boolIndex == -1)
+		if (targetIndex == -1)
 		{
 			return false;
 		}
 
-		int mask = 1 << boolIndex;
-		int currIndex = boolIndex / TYPE_CAPACITY;
+		int mask = 1 << targetIndex;
+		int currIndex = targetIndex / TYPE_CAPACITY;
 		int lastIndex = (mSize - 1) / TYPE_CAPACITY;
 
 		unsigned int lowBits = mBools[currIndex] % mask;
-		unsigned int highBits = mBools[currIndex] ^ lowBits;
+		unsigned int highBits = mBools[currIndex] & (~mask);
+		//highBits ^= lowBits;
 		highBits >>= 1;
 		mBools[currIndex] = highBits | lowBits;
 
@@ -114,8 +113,13 @@ namespace lab8
 	template <size_t N>
 	bool FixedVector<bool, N>::Get(unsigned int index) const
 	{
-		unsigned int boolIndex = index % TYPE_CAPACITY;
-		int mask = 1 << boolIndex;
+		if (index >= mSize)
+		{
+			return false;
+		}
+
+		unsigned int targetIndex = index % TYPE_CAPACITY;
+		int mask = 1 << targetIndex;
 		mask &= mBools[index / TYPE_CAPACITY];
 
 		return mask == 0 ? false : true;
@@ -167,7 +171,7 @@ namespace lab8
 		}
 		else
 		{
-			for (i = 0; i < (mSize - 1) / TYPE_CAPACITY + 1; ++i)
+			for (i = 0; i <= lastIndex; ++i)
 			{
 				if (mBools[i] == 0)
 				{
