@@ -30,12 +30,16 @@ namespace lab8
 		};
 		size_t mSize;
 		unsigned int mBools[(MAX - 1) / TYPE_CAPACITY + 1];
+		size_t arrIndex;
+		size_t arrLength;
 	};
 
 	template <size_t N>
 	FixedVector<bool, N>::FixedVector()
 		: mSize(0)
+		, arrIndex(0)
 	{
+		arrLength = MAX == 0 ? 0 : MAX / TYPE_CAPACITY + 1;
 		for (int i = 0; i < (MAX - 1) / TYPE_CAPACITY + 1; ++i)
 		{
 			mBools[i] = 0;
