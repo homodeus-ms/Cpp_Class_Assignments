@@ -23,7 +23,7 @@ namespace lab9
 	private:
 		size_t mMaxPoolSize;
 		size_t mFreeObjectCount;
-		std::queue<std::unique_ptr<T>> mPtrs;
+		std::queue<T*> mPtrs;
 
 	};
 
@@ -39,17 +39,16 @@ namespace lab9
 	{
 		if (mFreeObjectCount == 0)
 		{
-			std::unique_ptr<T> p = std::make_unique<T>();
-			T* temp = p.release();
+			T* p = new T();
 			
-			return temp;
+			return p;
 		}
 
-		auto p = std::move(mPtrs.front());
+		auto poped = mPtrs.front();
 		mPtrs.pop();
 		--mFreeObjectCount;
 
-		return p.release();
+		return poped;
 	}
 
 	template <typename T>
@@ -60,8 +59,8 @@ namespace lab9
 			delete ptr;
 			return;
 		}
-		std::unique_ptr<T> p(ptr);
-		mPtrs.push(std::move(p));
+		
+		mPtrs.push(ptr);
 		++mFreeObjectCount;
 		return;
 	}
