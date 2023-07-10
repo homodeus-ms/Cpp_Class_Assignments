@@ -5,7 +5,7 @@ namespace lab9
 	Game::Game(unsigned int seed, unsigned int poolSize)
 		: mRandom(seed)
 	{
-		mPoolPtr = std::make_unique<ObjectPool<IceCube>>(poolSize);
+		mPoolPtr = new ObjectPool<IceCube>(poolSize);
 	}
 
 	Game::~Game()
@@ -14,6 +14,8 @@ namespace lab9
 		{
 			delete (*it);
 		}
+
+		delete mPoolPtr;
 
 		mActiveGameObjects.clear();
 	}

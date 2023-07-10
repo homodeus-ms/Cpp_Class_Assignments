@@ -25,6 +25,6 @@ namespace lab9
 
 		Random mRandom;
 		std::vector<IceCube*> mActiveGameObjects;
-		std::unique_ptr<ObjectPool<IceCube>> mPoolPtr;
+		ObjectPool<IceCube>* mPoolPtr;
 	};
 }

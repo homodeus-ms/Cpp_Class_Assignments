@@ -11,7 +11,7 @@ namespace lab9
 	{
 	public:
 		ObjectPool(size_t maxPoolSize);
-		~ObjectPool() = default;
+		~ObjectPool();
 		ObjectPool(const ObjectPool& other) = delete;
 		ObjectPool& operator=(const ObjectPool&) = delete;
 
@@ -32,6 +32,17 @@ namespace lab9
 		: mMaxPoolSize(maxPoolSize)
 		, mFreeObjectCount(0)
 	{
+	}
+
+	template <typename T>
+	ObjectPool<T>::~ObjectPool()
+	{
+		while (mPtrs.size() != 0)
+		{
+			T* temp = mPtrs.front();
+			delete temp;
+			mPtrs.pop();
+		}
 	}
 
 	template <typename T>
