@@ -80,7 +80,7 @@ namespace lab8
 
 		unsigned int lowBits = mBools[currIndex] % mask;
 		unsigned int highBits = mBools[currIndex] & (~mask);
-		//highBits ^= lowBits;
+		
 		highBits >>= 1;
 		mBools[currIndex] = highBits | lowBits;
 
