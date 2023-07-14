@@ -34,13 +34,13 @@ namespace assignment4
 	{
 		if (mRoot == nullptr)
 		{
-			mRoot = make_shared<TreeNode<T>>(std::move(data));
+			mRoot = std::make_shared<TreeNode<T>>(std::move(data));
 
 			return;
 		}
 
 		std::shared_ptr<TreeNode<T>> parent = mRoot;
-		std::shared_ptr<TreeNode<T>> newNode = make_shared<TreeNode<T>>(parent, std::move(data));
+		std::shared_ptr<TreeNode<T>> newNode = std::make_shared<TreeNode<T>>(parent, std::move(data));
 
 		while (true)
 		{
@@ -126,7 +126,6 @@ namespace assignment4
 		}
 
 		DeleteReorder(target);
-		//std::shared_ptr<TreeNode<T>> newParent = target->Left
 
 		return true;
 	}
@@ -165,6 +164,7 @@ namespace assignment4
 
 		return nullptr;
 	}
+
 	template<typename T>
 	void BinarySearchTree<T>::DeleteReorder(std::shared_ptr<TreeNode<T>>& target)
 	{
