@@ -181,6 +181,8 @@ namespace assignment4
 			{
 				if (target == mRoot)
 				{
+					newParent->Right = target->Right;
+					target->Right->Parent = newParent;
 					mRoot = std::move(newParent);
 					return;
 				}
@@ -194,12 +196,10 @@ namespace assignment4
 
 			goto REORDER;
 		}
-		else    // target의 왼쪽 자식이 없는 경우,
-			    // target의 자식이 둘 다 없는 경우는 이미 배제 되었기 때문에
-			    // target의 오른쪽 자식을 target자리에 두면 끝
+		else    // target의 왼쪽 자식이 없는 경우
 		{
 			newParent = target->Right;
-			target->Right = nullptr;
+			//target->Right = nullptr;
 
 			if (target == mRoot)
 			{
@@ -208,8 +208,19 @@ namespace assignment4
 			}
 
 			newParent->Parent = target->Parent;
-			target->Parent.lock() = nullptr;
-			newParent->Parent.lock()->Left = newParent;
+			//target->Parent.lock() = nullptr;
+			if (newParent->Parent.lock()->Left == target)
+			{
+				newParent->Parent.lock()->Left = newParent;
+			}
+			else if (newParent->Parent.lock()->Right == target)
+			{
+				newParent->Parent.lock()->Right = newParent;
+			}
+			else
+			{
+				goto REORDER;
+			}
 			return;
 		}
 

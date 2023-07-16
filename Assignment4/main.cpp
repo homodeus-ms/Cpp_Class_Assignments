@@ -6,6 +6,7 @@
 using namespace assignment4;
 using namespace std;
 
+
 template<typename T>
 inline void PrintRootNode(BinarySearchTree<T>& tree)
 {
@@ -238,15 +239,44 @@ void Test_Traverse()
 	return;
 }
 
+void Test_Random_Delete()
+{
+	BinarySearchTree<int> tree;
+	size_t testSize = 50;
+
+	int arr[50];
+
+	
+	for (size_t i = 0; i < testSize; ++i)
+	{
+		arr[i] = rand() % 100;
+	}
+	
+
+	for (size_t i = 0; i < testSize; ++i)
+	{
+		tree.Insert(std::make_unique<int>(arr[i]));
+	}
+
+	std::vector<int> v;
+	for (size_t i = 0; i < testSize; i++)
+	{
+		tree.Delete(arr[i]);
+		v = tree.TraverseInOrder(tree.GetRootNode().lock());
+		PrintVector(v);
+		assert(v.size() == testSize - i - 1);
+	}
+}
+
 
 
 int main()
 {
-	Test_Insert_GetRoot();
-	Test_Search();
-	Test_Delete();
-	Test_Traverse();
-
+	//Test_Insert_GetRoot();
+	//Test_Search();
+	//Test_Delete();
+	//Test_Traverse();
+	Test_Random_Delete();
 	//BinarySearchTree<int> tree;
 
 #if 0
