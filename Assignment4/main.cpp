@@ -247,56 +247,51 @@ int main()
 	Test_Delete();
 	Test_Traverse();
 
+	//BinarySearchTree<int> tree;
+
+#if 0
+	BinarySearchTree<int> tree;
+
+	tree.Insert(std::make_unique<int>(15));
+	tree.Insert(std::make_unique<int>(20));
+	tree.Insert(std::make_unique<int>(17));
+	tree.Insert(std::make_unique<int>(19));
+	tree.Insert(std::make_unique<int>(18));
+	tree.Insert(std::make_unique<int>(30));
+	tree.Insert(std::make_unique<int>(7));
+	tree.Insert(std::make_unique<int>(12));
+	
+	vector v = tree.TraverseInOrder(tree.GetRootNode().lock());
+	PrintVector(v);
+
+	tree.Delete(17);
+
+	v = tree.TraverseInOrder(tree.GetRootNode().lock());
+	PrintVector(v);
+
+#endif
 
 #if 0
 	BinarySearchTree<int> tree;
 
 	tree.Insert(std::make_unique<int>(10));
 	tree.Insert(std::make_unique<int>(15));
+	tree.Insert(std::make_unique<int>(6));
+	tree.Insert(std::make_unique<int>(3));
+	tree.Insert(std::make_unique<int>(7));
 	tree.Insert(std::make_unique<int>(5));
 	tree.Insert(std::make_unique<int>(4));
-	tree.Insert(std::make_unique<int>(19));
-	tree.Insert(std::make_unique<int>(20));
-	tree.Insert(std::make_unique<int>(17));
-	tree.Insert(std::make_unique<int>(12));
+	tree.Insert(std::make_unique<int>(0));
+	tree.Insert(std::make_unique<int>(0));
 
-	PrintRootNode(tree);
-
-	assert(tree.Delete(10));
-	PrintRootNode(tree);
-
-	std::vector<int> v = tree.TraverseInOrder(tree.GetRootNode().lock());
+	vector v = tree.TraverseInOrder(tree.GetRootNode().lock());
 	PrintVector(v);
 
-	assert(tree.Delete(5));
-	PrintRootNode(tree);
-
-	assert(tree.Delete(4));
-	PrintRootNode(tree);
+	tree.Delete(15);
 
 	v = tree.TraverseInOrder(tree.GetRootNode().lock());
 	PrintVector(v);
 	
-	assert(tree.Delete(15));
-	PrintRootNode(tree);
-
-	v = tree.TraverseInOrder(tree.GetRootNode().lock());
-	PrintVector(v);
-
-	assert(tree.Delete(12));
-	PrintRootNode(tree);
-
-	v = tree.TraverseInOrder(tree.GetRootNode().lock());
-	PrintVector(v);
-
-	assert(tree.Delete(19));
-	PrintRootNode(tree);
-
-	assert(tree.Delete(17));
-	PrintRootNode(tree);
-
-	assert(tree.Delete(20));
-	PrintRootNode(tree);
 #endif
 	/*
 	assert(v.size() == 8);

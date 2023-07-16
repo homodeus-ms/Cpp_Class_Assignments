@@ -177,24 +177,107 @@ namespace assignment4
 				newParent = newParent->Right;
 			}
 
+			if (newParent->Parent.lock() == target)
+			{
+				if (target == mRoot)
+				{
+					mRoot = std::move(newParent);
+					return;
+				}
+				/*
+				newParent->Parent = target->Parent;
+				newParent->Parent.lock()->Left = newParent;
+
+				return;
+				*/
+			}
+
 			goto REORDER;
 		}
-		else
+		else    // target의 왼쪽 자식이 없는 경우,
+			    // target의 자식이 둘 다 없는 경우는 이미 배제 되었기 때문에
+			    // target의 오른쪽 자식을 target자리에 두면 끝
 		{
 			newParent = target->Right;
+			target->Right = nullptr;
 
-			while (newParent->Left != nullptr)
+			if (target == mRoot)
 			{
-				newParent = newParent->Left;
+				mRoot = std::move(newParent);
+				return;
 			}
+
+			newParent->Parent = target->Parent;
+			target->Parent.lock() = nullptr;
+			newParent->Parent.lock()->Left = newParent;
+			return;
 		}
 
 	REORDER:
 
+		std::shared_ptr<TreeNode<T>> oldParent = newParent->Parent.lock();
+		std::shared_ptr<TreeNode<T>> oldLeftChild = newParent->Left;
+		
+		// newParent와 oldLeftChild의 관계를 끊음
+		if (oldLeftChild != nullptr)
+		{
+			oldLeftChild->Parent.lock() = nullptr;
+			newParent->Left = nullptr;
+		}
 
+		if (oldParent != target)
+		{
+			// newParent와 oldParent와의 관계를 끊음
+			oldParent->Right = nullptr;
+			newParent->Parent.lock() = nullptr;
+
+			// target의 왼쪽 자식을 newParent의 왼쪽 자식으로
+			newParent->Left = target->Left;
+			newParent->Left->Parent = newParent;
+		}
+		
+		// target의 오른쪽 자식을 newParent의 오른쪽 자식으로
+		
+		newParent->Right = target->Right;
+
+		if (newParent->Right != nullptr)
+		{
+			newParent->Right->Parent = newParent;
+		}
+
+		// target의 부모와 newParent가 상호 포인팅
+		if (target == mRoot)
+		{
+			mRoot = newParent;
+		}
+		else
+		{
+			newParent->Parent = target->Parent;
+			if (target == target->Parent.lock()->Left)
+			{
+				target->Parent.lock()->Left = newParent;
+			}
+			else
+			{
+				target->Parent.lock()->Right = newParent;
+			}
+		}
+
+		if (oldParent != target)
+		{
+			oldParent->Right = oldLeftChild;
+		}
+		else
+		{
+			newParent->Left = oldLeftChild;
+		}
+
+
+
+		/*
 		if (target->Left != nullptr && target->Left != newParent)
 		{
-			if (newParent->Parent.lock() == target->Left)
+			if (oldParentOfNewP == target->Left)
 			{
 				target->Left->Right = nullptr;
 			}
@@ -203,7 +286,7 @@ namespace assignment4
 		}
 		if (target->Right != nullptr && target->Right != newParent)
 		{
-			if (newParent->Parent.lock() == target->Right)
+			if (oldParentOfNewP == target->Right)
 			{
 				target->Right->Left = nullptr;
 			}
@@ -225,6 +308,7 @@ namespace assignment4
 			return;
 		}
 		target->Parent.lock()->Right = newParent;
+		*/
 		
 	}
 
