@@ -22,6 +22,8 @@ namespace assignment4
 		const std::weak_ptr<TreeNode<T>> GetRootNode() const;
 		std::shared_ptr<TreeNode<T>> GetTargetNodeOrNull(const T& data) const;
 		void DeleteReorder(std::shared_ptr<TreeNode<T>>& target);
+		void DeleteRecursive(std::shared_ptr<TreeNode<T>>& target);
+		std::shared_ptr<TreeNode<T>> GetNewParentOrNull(std::shared_ptr<TreeNode<T>>& target);
 
 		static std::vector<T> TraverseInOrder(const std::shared_ptr<TreeNode<T>> startNode);
 
@@ -102,6 +104,7 @@ namespace assignment4
 	template<typename T>
 	bool BinarySearchTree<T>::Delete(const T& data)
 	{
+#if 0
 		std::shared_ptr<TreeNode<T>> target = GetTargetNodeOrNull(data);
 
 		if (target == nullptr)
@@ -126,9 +129,145 @@ namespace assignment4
 		}
 
 		DeleteReorder(target);
+#endif
+		std::shared_ptr<TreeNode<T>> target = GetTargetNodeOrNull(data);
+		if (target == nullptr)
+		{
+			return false;
+		}
+
+		std::shared_ptr<TreeNode<T>> newParent = GetNewParentOrNull(target);
+
+		
+		if (newParent == nullptr)
+		{
+			if (target == mRoot)
+			{
+				mRoot = nullptr;
+			}
+			else if (target == target->Parent.lock()->Left)
+			{
+				target->Parent.lock()->Left = nullptr;
+			}
+			else
+			{
+				target->Parent.lock()->Right = nullptr;
+			}
+
+			return true;
+		}
+		
+		DeleteRecursive(target);
+		
+		newParent->Parent = target->Parent;
 
 		return true;
 	}
+
+	template<typename T>
+	void BinarySearchTree<T>::DeleteRecursive(std::shared_ptr<TreeNode<T>>& target)
+	{
+		if (target->Left == nullptr && target->Right == nullptr)
+		{
+			return;
+		}
+
+		std::shared_ptr<TreeNode<T>> newParent = GetNewParentOrNull(target);
+
+		DeleteRecursive(newParent);
+
+		// newParent가 원래 부모 가리키는 것을 끊기
+		
+
+		// newParent의 원래부모가 newParent가리키는 것을 끊기
+		if (newParent->Parent.lock()->Left == newParent)
+		{
+			newParent->Parent.lock()->Left = nullptr;
+			newParent->Parent.reset();
+			
+		}
+		else if (newParent->Parent.lock()->Right == newParent)
+		{
+			newParent->Parent.lock()->Right = nullptr;
+			newParent->Parent.reset();
+		}
+
+		// target의 부모의 자식으로 newParent가 들어가기
+		if (target == mRoot)
+		{
+			mRoot = newParent;
+		}
+		else if (target == target->Parent.lock()->Left)
+		{
+			target->Parent.lock()->Left = newParent;
+			newParent->Parent = target->Parent;
+		}
+		else
+		{
+			target->Parent.lock()->Right = newParent;
+			newParent->Parent = target->Parent;
+		}
+
+		// target의 자식들을 newParent에 달기
+		if (newParent == mRoot)
+		{
+			newParent->Left = target->Left;
+			if (newParent->Left != nullptr)
+			{
+				newParent->Left->Parent = newParent;
+			}
+
+			newParent->Right = target->Right;
+			if (newParent->Right != nullptr)
+			{
+				newParent->Right->Parent = newParent;
+			}
+		}
+		else
+		{
+			if (target->Left != nullptr && target->Left != newParent)
+			{
+				newParent->Left = target->Left;
+				newParent->Left->Parent = newParent;
+			}
+			if (target->Right != nullptr && target->Right != newParent)
+			{
+				newParent->Right = target->Right;
+				newParent->Right->Parent = newParent;
+			}
+		}
+	}
+
+	template<typename T>
+	std::shared_ptr<TreeNode<T>> BinarySearchTree<T>::GetNewParentOrNull(std::shared_ptr<TreeNode<T>>& target)
+	{
+		if (target->Left == nullptr && target->Right == nullptr)
+		{
+			return nullptr;
+		}
+
+		std::shared_ptr<TreeNode<T>> newParent = target->Left;
+
+		if (newParent == nullptr)
+		{
+			newParent = target->Right;
+
+			while (newParent->Left != nullptr)
+			{
+				newParent = newParent->Left;
+			}
+		}
+		else
+		{
+			while (newParent->Right != nullptr)
+			{
+				newParent = newParent->Right;
+			}
+		}
+
+		return newParent;
+	}
+
 
 	template<typename T>
 	std::vector<T> BinarySearchTree<T>::TraverseInOrder(const std::shared_ptr<TreeNode<T>> startNode)
@@ -168,6 +307,9 @@ namespace assignment4
 	template<typename T>
 	void BinarySearchTree<T>::DeleteReorder(std::shared_ptr<TreeNode<T>>& target)
 	{
+
+
+#if 0
 		std::shared_ptr<TreeNode<T>> newParent = target->Left;
 
 		if (newParent != nullptr)
@@ -283,7 +425,7 @@ namespace assignment4
 			newParent->Left = oldLeftChild;
 		}
 
-
+#endif
 
 		/*
 		if (target->Left != nullptr && target->Left != newParent)

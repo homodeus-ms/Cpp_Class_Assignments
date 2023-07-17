@@ -2,6 +2,7 @@
 #include <iostream>
 #include "TreeNode.h"
 #include "BinarySearchTree.h"
+#include <time.h>
 
 using namespace assignment4;
 using namespace std;
@@ -241,6 +242,7 @@ void Test_Traverse()
 
 void Test_Random_Delete()
 {
+	srand(time(NULL));
 	BinarySearchTree<int> tree;
 	size_t testSize = 50;
 
@@ -272,21 +274,21 @@ void Test_Random_Delete()
 
 int main()
 {
-	//Test_Insert_GetRoot();
-	//Test_Search();
-	//Test_Delete();
-	//Test_Traverse();
-	Test_Random_Delete();
+	Test_Insert_GetRoot();
+	Test_Search();
+	Test_Delete();
+	Test_Traverse();
+	//Test_Random_Delete();
 	//BinarySearchTree<int> tree;
 
 #if 0
 	BinarySearchTree<int> tree;
 
-	tree.Insert(std::make_unique<int>(15));
-	tree.Insert(std::make_unique<int>(20));
-	tree.Insert(std::make_unique<int>(17));
-	tree.Insert(std::make_unique<int>(19));
-	tree.Insert(std::make_unique<int>(18));
+	tree.Insert(std::make_unique<int>(10));
+	tree.Insert(std::make_unique<int>(7));
+	tree.Insert(std::make_unique<int>(5));
+	tree.Insert(std::make_unique<int>(3));
+	tree.Insert(std::make_unique<int>(6));
 	tree.Insert(std::make_unique<int>(30));
 	tree.Insert(std::make_unique<int>(7));
 	tree.Insert(std::make_unique<int>(12));
@@ -294,7 +296,7 @@ int main()
 	vector v = tree.TraverseInOrder(tree.GetRootNode().lock());
 	PrintVector(v);
 
-	tree.Delete(17);
+	tree.Delete(3);
 
 	v = tree.TraverseInOrder(tree.GetRootNode().lock());
 	PrintVector(v);
