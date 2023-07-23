@@ -73,6 +73,16 @@ namespace lab10
 			return;
 		}
 
+		if (index == 0)
+		{
+			std::shared_ptr<Node<T>> newNode = std::make_shared<Node<T>>(std::move(data));
+			mHead->Previous = newNode;
+			newNode->Next = mHead;
+			mHead = newNode;
+			++mLength;
+			return;
+		}
+
 		std::shared_ptr<Node<T>> newNode = std::make_shared<Node<T>>(std::move(data));
 		std::shared_ptr<Node<T>> nextNode = (*this)[index];
 		nextNode->Previous.lock()->Next = newNode;
