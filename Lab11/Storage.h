@@ -32,12 +32,14 @@ namespace lab11
 	template<typename T>
 	Storage<T>::Storage(unsigned int length)
 		: mLength(length)
-		, mPtr(new T[length])
+		, mPtr(std::make_unique<T[]>(length))
 	{
+		/*
 		for (size_t i = 0; i < mLength; ++i)
 		{
-			mPtr[i] = 0;
+			mPtr[i] = NULL;
 		}
+		*/
 	}
 
 	template<typename T>
@@ -69,9 +71,9 @@ namespace lab11
 		{
 			mPtr.reset();
 
-			mLength(other.mLength);
+			mLength = other.mLength;
 
-			mPtr(new T[mLength]);
+			mPtr = std::make_unique<T[]>(other.mLength);
 
 			for (size_t i = 0; i < mLength; ++i)
 			{

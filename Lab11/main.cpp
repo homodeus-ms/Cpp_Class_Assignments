@@ -14,9 +14,9 @@ int main()
 
 	Storage<float> s(7, 1.2f);
 
-	Storage<float> arr2(arr);
+	s = arr;
 
-	const std::unique_ptr<float[]>& p = arr2.GetData();
+	const std::unique_ptr<float[]>& p = s.GetData();
 
 	for (size_t i = 0; i < 5; ++i)
 	{
